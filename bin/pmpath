@@ -7,6 +7,9 @@ use warnings;
 use SHARYANTO::Module::Path; # so it's detected by lint-prereqs
 use Perinci::CmdLine 1.04;
 
+# DATE
+# VERSION
+
 Perinci::CmdLine->new(url => '/SHARYANTO/Module/Path/module_path')->run;
 
 # ABSTRACT: Get path to locally installed Perl module
