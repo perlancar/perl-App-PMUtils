@@ -1,0 +1,30 @@
+#!/usr/bin/env perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use SHARYANTO::Module::Path; # so it's detected by lint-prereqs
+use Perinci::CmdLine 1.04;
+
+Perinci::CmdLine->new(url => '/SHARYANTO/Module/Path/pod_path')->run;
+
+# ABSTRACT: Get path to locally installed POD
+# PODNAME: podpath
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % podpath PSGI
+
+To active bash completion:
+
+ % complete -C podpath podpath; # can be put in bash startup file e.g. .bashrc
+ % pod PSG<tab>
+
+
+=head1 KNOWN ISSUES
+
+Tab completion uses C</> instead of C<::> due issue with how bash treats C<:>
+during completion.
