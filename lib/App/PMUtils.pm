@@ -18,5 +18,6 @@ This distribution provides the following command-line utilities:
  podpath
  pmless
  pmedit
+ pmcost
 
 =cut

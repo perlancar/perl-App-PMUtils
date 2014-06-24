@@ -1,0 +1,105 @@
+#!/usr/bin/env perl
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any '$log';
+
+use Perinci::CmdLine 1.04;
+
+# DATE
+# VERSION
+
+our %SPEC;
+$SPEC{pmcost} = {
+    v => 1.1,
+    summary => 'Load Perl module with Devel::EndStats',
+    description => <<'_',
+
+
+
+_
+    args => {
+        module => {
+            schema => 'str*',
+            req => 1,
+            pos => 0,
+            completion => sub {
+                require Complete::Module;
+                require SHARYANTO::Complete::Util;
+                my %args = @_;
+                SHARYANTO::Complete::Util::mimic_shell_dir_completion(
+                    completion => Complete::Module::complete_module(
+                        word      => $args{word},
+                        find_pmc  => 0,
+                        find_pod  => 0,
+                        separator => '/',
+                    )
+                );
+            },
+        },
+        hide_core => {
+            schema => 'bool',
+        },
+        hide_noncore => {
+            schema => 'bool',
+        },
+        show_memsize => {
+            schema => 'bool',
+        },
+    },
+};
+sub pmcost {
+    my %args = @_;
+    my $mod = $args{module};
+    $mod =~ s!/!::!g;
+    my $de_import = "verbose,1";
+    $de_import .= ",hide_core,1" if $args{hide_core};
+    $de_import .= ",hide_noncore,1" if $args{hide_noncore};
+    $de_import .= ",show_memsize,1,sort,-memsize" if $args{show_memsize};
+    my @cmd = ($^X, "-MDevel::EndStats=$de_import", "-M$mod", "-e1");
+    $log->tracef("exec(%s)", \@cmd);
+    exec @cmd;
+    # [200]; # won't get reached
+}
+
+Perinci::CmdLine->new(url => '/main/pmcost')->run;
+
+# ABSTRACT: Load Perl module with Devel::EndStats
+# PODNAME: pmless
+
+=head1 SYNOPSIS
+
+ % pmcost Some::Module
+ $ pmcost HTTP::Tiny
+
+ # Start stats from Devel::EndStats:
+ # Program runtime duration: 0.011s
+ # Total number of required files loaded: 13
+ # Total number of required lines loaded: 6789
+ # Seq  Lines  Load Time         Module
+ #  11     54     0.128ms(  1%)    SelectSaver.pm (loaded by IO::Handle)
+ #  13     68     0.488ms(  4%)    IO.pm (loaded by IO::Handle)
+ #   4    100     0.091ms(  0%)    bytes.pm (loaded by HTTP::Tiny)
+ #  17    143     0.387ms(  3%)    IO/Socket/UNIX.pm (loaded by IO::Socket)
+ #   9    170     0.306ms(  2%)    Symbol.pm (loaded by IO::Handle)
+ #   5    283     0.368ms(  3%)    Errno.pm (loaded by HTTP::Tiny::Handle)
+ #  14    355     0.226ms(  2%)    XSLoader.pm (loaded by IO)
+ #  16    466     1.182ms( 10%)    IO/Socket/INET.pm (loaded by IO::Socket)
+ #   6    569     5.831ms( 53%)    IO/Socket.pm (loaded by HTTP::Tiny::Handle)
+ #   7    653     1.912ms( 17%)    IO/Handle.pm (loaded by IO::Socket)
+ #   2    709     1.035ms(  9%)    Carp.pm (loaded by HTTP::Tiny)
+ #  15   1114     1.328ms( 12%)    Socket.pm (loaded by IO::Socket)
+ #   1   2105    10.889ms( 99%)    HTTP/Tiny.pm (loaded by main)
+ # End of stats
+
+To active bash completion:
+
+ % complete -C pmcost pmcost ; # can be put in bash startup file e.g. .bashrc
+ % pmcost Some<tab>
+
+
+=head1 KNOWN ISSUES
+
+Tab completion uses C</> instead of C<::> due issue with how bash treats C<:>
+during completion.
