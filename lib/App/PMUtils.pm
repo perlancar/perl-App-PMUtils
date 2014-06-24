@@ -20,5 +20,7 @@ This distribution provides the following command-line utilities:
  pmless
  pmedit
  pmcost
+ pmdoc
+ pmman
 
 =cut

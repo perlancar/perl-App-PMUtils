@@ -1,0 +1,76 @@
+#!/usr/bin/env perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use Perinci::CmdLine 1.04;
+
+# DATE
+# VERSION
+
+our %SPEC;
+$SPEC{pmdoc} = {
+    v => 1.1,
+    summary => 'Show documentation of Perl module',
+    description => <<'_',
+
+This function executes `perldoc`. Basically what it offers is command-line
+completion.
+
+_
+    args => {
+        module => {
+            schema => 'str*',
+            req => 1,
+            pos => 0,
+            completion => sub {
+                require Complete::Module;
+                require SHARYANTO::Complete::Util;
+                my %args = @_;
+                SHARYANTO::Complete::Util::mimic_shell_dir_completion(
+                    completion => Complete::Module::complete_module(
+                        word      => $args{word},
+                        find_pmc  => 0,
+                        find_pod  => 1,
+                        separator => '/',
+                    )
+                );
+            },
+        },
+    },
+    deps => {
+        prog => 'perldoc',
+    },
+};
+sub pmdoc {
+    require SHARYANTO::Module::Path;
+    my %args = @_;
+    my $mod = $args{module};
+    $mod =~ s!/!::!g;
+    @cmd = ("perldoc", $mod);
+    exec @cmd;
+    # [200]; # unreachable
+}
+
+Perinci::CmdLine->new(url => '/main/pmdoc')->run;
+
+# ABSTRACT: Show documentation of Perl module
+# PODNAME: pmdoc
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % pmdoc Some::Module
+
+To active bash completion:
+
+ % complete -C pmdoc pmdoc ; # can be put in bash startup file e.g. .bashrc
+ % pmdoc Some<tab>
+
+
+=head1 KNOWN ISSUES
+
+Tab completion uses C</> instead of C<::> due issue with how bash treats C<:>
+during completion.
