@@ -14,6 +14,7 @@ use warnings;
 
 This distribution provides the following command-line utilities:
 
+ pminfo
  pmpath
  podpath
  pmless

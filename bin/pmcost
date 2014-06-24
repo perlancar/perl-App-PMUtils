@@ -66,7 +66,7 @@ sub pmcost {
 Perinci::CmdLine->new(url => '/main/pmcost')->run;
 
 # ABSTRACT: Load Perl module with Devel::EndStats
-# PODNAME: pmless
+# PODNAME: pmcost
 
 =head1 SYNOPSIS
 

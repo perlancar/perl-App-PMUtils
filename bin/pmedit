@@ -53,7 +53,7 @@ sub pmedit {
 Perinci::CmdLine->new(url => '/main/pmedit')->run;
 
 # ABSTRACT: Launch editor for Perl module source code
-# PODNAME: pmless
+# PODNAME: pmedit
 
 =head1 SYNOPSIS
 
