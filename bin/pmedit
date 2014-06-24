@@ -36,18 +36,20 @@ $SPEC{pmedit} = {
 };
 sub pmedit {
     require SHARYANTO::Module::Path;
+    require String::ShellQuote;
+
     my %args = @_;
     my $mod = $args{module};
     my $mpath = SHARYANTO::Module::Path::module_path(
         module => $mod, find_pmc=>0, find_pod=>0, find_prefix=>0);
-    if (!$ENV{EDITOR}) {
-        [412, "Please set EDITOR first"];
-    } elsif (defined $mpath) {
-        system $ENV{EDITOR}, $mpath;
-        [200, "OK"];
-    } else {
-        [404, "Can't find module $mod"];
-    }
+    return [412, "Please set EDITOR first"] unless defined($ENV{EDITOR});
+    return [500, "Can't find path for $mod"] unless defined $mpath;
+
+    # array variant doesn't always work because $EDITOR can contain args, e.g.
+    # "emacsclient -t".
+    my $cmd = "$ENV{EDITOR} ".String::ShellQuote::shell_quote($mpath);
+    exec $cmd;
+    # [200]; # unreached
 }
 
 Perinci::CmdLine->new(url => '/main/pmedit')->run;
