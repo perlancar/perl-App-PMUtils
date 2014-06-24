@@ -1,5 +1,10 @@
 Revision history for App-PMUtils
 
+0.04    2014-06-24 (SHARYANTO)
+
+        - pmedit: Handle arguments in $EDITOR.
+
+
 0.03    2014-06-24 (SHARYANTO)
 
         - Add utilities: pmdoc, pmman.
