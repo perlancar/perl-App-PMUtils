@@ -48,7 +48,7 @@ sub pmdoc {
     my %args = @_;
     my $mod = $args{module};
     $mod =~ s!/!::!g;
-    @cmd = ("perldoc", $mod);
+    my @cmd = ("perldoc", $mod);
     exec @cmd;
     # [200]; # unreachable
 }

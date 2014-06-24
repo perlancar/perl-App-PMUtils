@@ -47,7 +47,7 @@ sub pmman {
     my %args = @_;
     my $mod = $args{module};
     $mod =~ s!/!::!g;
-    @cmd = ("man", $mod);
+    my @cmd = ("man", $mod);
     exec @cmd;
     # [200]; # unreachable
 }
