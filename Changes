@@ -1,5 +1,10 @@
 Revision history for App-PMUtils
 
+0.02    2014-06-24 (SHARYANTO)
+
+        - Add utilities: pmcost, pminfo.
+
+
 0.01    2014-06-24 (SHARYANTO)
 
         - First release.
