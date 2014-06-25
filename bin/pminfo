@@ -32,9 +32,9 @@ _
             greedy => 1,
             element_completion => sub {
                 require Complete::Module;
-                require SHARYANTO::Complete::Util;
+                require Complete::Util;
                 my %args = @_;
-                SHARYANTO::Complete::Util::mimic_shell_dir_completion(
+                Complete::Util::mimic_shell_dir_completion(
                     completion => Complete::Module::complete_module(
                         word      => $args{word},
                         find_pmc  => 0,
