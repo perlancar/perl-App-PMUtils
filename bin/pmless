@@ -65,6 +65,6 @@ Basic usage:
 
 To active bash completion:
 
- % complete -C pmpath pmpath ; # can be put in bash startup file e.g. .bashrc
- % pmpath Some<tab>
+ % complete -C pmless pmless ; # can be put in bash startup file e.g. .bashrc
+ % pmless Some<tab>
 

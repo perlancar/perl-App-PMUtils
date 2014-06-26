@@ -24,5 +24,5 @@ Basic usage:
 To active bash completion:
 
  % complete -C podpath podpath; # can be put in bash startup file e.g. .bashrc
- % pod PSG<tab>
+ % podpath PSG<tab>
 
