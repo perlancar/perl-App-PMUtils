@@ -68,8 +68,3 @@ To active bash completion:
  % complete -C pmpath pmpath ; # can be put in bash startup file e.g. .bashrc
  % pmpath Some<tab>
 
-
-=head1 KNOWN ISSUES
-
-Tab completion uses C</> instead of C<::> due issue with how bash treats C<:>
-during completion.
