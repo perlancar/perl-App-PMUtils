@@ -34,6 +34,7 @@ _
                         find_pmc  => 0,
                         find_pod  => 1,
                         separator => '/',
+                        ci        => 1,
                     )
                 );
             },

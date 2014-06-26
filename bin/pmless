@@ -28,6 +28,7 @@ $SPEC{pmless} = {
                         find_pmc  => 0,
                         find_pod  => 0,
                         separator => '/',
+                        ci        => 1,
                     )
                 );
             },
