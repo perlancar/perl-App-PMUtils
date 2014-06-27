@@ -50,7 +50,11 @@ sub podpath {
         push @$res, @$mods > 1 ? {pod=>$pod, path=>$mpath} : $mpath;
     }
 
-    [$found ? 200:404, "OK", $res];
+    if ($found) {
+        [200, "OK", $res];
+    } else {
+        [404, "No such POD"];
+    }
 }
 
 Perinci::CmdLine->new(
