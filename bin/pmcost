@@ -22,10 +22,11 @@ $SPEC{pmcost} = {
 _
     args => {
         module => {
-            schema => 'str*',
-            req => 1,
-            pos => 0,
-            completion => $App::PMUtils::_complete_module,
+            schema => ['array*' => of=>'str*', min_len=>1],
+            req    => 1,
+            pos    => 0,
+            greedy => 1,
+            element_completion => $App::PMUtils::_complete_module,
         },
         hide_core => {
             schema => 'bool',
@@ -40,13 +41,21 @@ _
 };
 sub pmcost {
     my %args = @_;
-    my $mod = $args{module};
-    $mod =~ s!/!::!g;
+    my $mods = $args{module};
+
     my $de_import = "verbose,1";
     $de_import .= ",hide_core,1" if $args{hide_core};
     $de_import .= ",hide_noncore,1" if $args{hide_noncore};
     $de_import .= ",show_memsize,1,sort,-memsize" if $args{show_memsize};
-    my @cmd = ($^X, "-MDevel::EndStats=$de_import", "-M$mod", "-e1");
+    my @cmd = ($^X, "-MDevel::EndStats=$de_import");
+
+    for my $mod (@$mods) {
+        $mod =~ s!/!::!g;
+        push @cmd, "-M$mod";
+    }
+
+    push @cmd, "-e1";
+
     $log->tracef("exec(%s)", \@cmd);
     exec @cmd;
     # [200]; # won't get reached
