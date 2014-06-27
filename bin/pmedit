@@ -41,7 +41,10 @@ sub pmedit {
     # [200]; # unreached
 }
 
-Perinci::CmdLine->new(url => '/main/pmedit')->run;
+Perinci::CmdLine->new(
+    log_any_app => 0,
+    url => '/main/pmedit',
+)->run;
 
 # ABSTRACT: Launch editor for Perl module source code
 # PODNAME: pmedit

@@ -41,7 +41,10 @@ sub pmdoc {
     # [200]; # unreachable
 }
 
-Perinci::CmdLine->new(url => '/main/pmdoc')->run;
+Perinci::CmdLine->new(
+    log_any_app => 0,
+    url => '/main/pmdoc',
+)->run;
 
 # ABSTRACT: Show documentation of Perl module
 # PODNAME: pmdoc

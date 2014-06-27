@@ -52,7 +52,10 @@ sub pmcost {
     # [200]; # won't get reached
 }
 
-Perinci::CmdLine->new(url => '/main/pmcost')->run;
+Perinci::CmdLine->new(
+    log_any_app => 0,
+    url => '/main/pmcost',
+)->run;
 
 # ABSTRACT: Load Perl module with Devel::EndStats
 # PODNAME: pmcost

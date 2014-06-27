@@ -40,7 +40,10 @@ sub pmman {
     # [200]; # unreachable
 }
 
-Perinci::CmdLine->new(url => '/main/pmman')->run;
+Perinci::CmdLine->new(
+    log_any_app => 0,
+    url => '/main/pmman',
+)->run;
 
 # ABSTRACT: Show manpage of Perl module
 # PODNAME: pmman

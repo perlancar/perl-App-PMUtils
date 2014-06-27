@@ -67,7 +67,10 @@ sub pminfo {
     $res;
 }
 
-Perinci::CmdLine->new(url => '/main/pminfo')->run;
+Perinci::CmdLine->new(
+    log_any_app => 0,
+    url => '/main/pminfo',
+)->run;
 
 # ABSTRACT: Get Perl module information
 # PODNAME: pminfo

@@ -23,7 +23,10 @@ gen_modified_sub(
     },
 );
 
-Perinci::CmdLine->new(url => '/main/pmpath')->run;
+Perinci::CmdLine->new(
+    log_any_app => 0,
+    url => '/main/pmpath',
+)->run;
 
 # ABSTRACT: Get path to locally installed Perl module
 # PODNAME: pmpath
