@@ -4,13 +4,26 @@ use 5.010;
 use strict;
 use warnings;
 
-use SHARYANTO::Module::Path; # so it's detected by lint-prereqs
+use App::PMUtils;
 use Perinci::CmdLine 1.04;
+use Perinci::Sub::Util qw(gen_modified_sub);
+use SHARYANTO::Module::Path;
 
 # VERSION
 # DATE
 
-Perinci::CmdLine->new(url => '/SHARYANTO/Module/Path/pod_path')->run;
+gen_modified_sub(
+    output_name => 'podpath',
+    base_name   => 'SHARYANTO::Module::Path::pod_path',
+    modify_args => {
+        module => sub {
+            my $as = shift;
+            $as->{completion} = $App::PMUtils::_complete_pod;
+        },
+    },
+);
+
+Perinci::CmdLine->new(url => '/main/podpath')->run;
 
 # ABSTRACT: Get path to locally installed POD
 # PODNAME: podpath

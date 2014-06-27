@@ -7,6 +7,51 @@ use warnings;
 # VERSION
 # DATE
 
+our $_complete_module = sub {
+    require Complete::Module;
+    require Complete::Util;
+    my %args = @_;
+
+    my $word = $args{word} // '';
+
+    # convenience, convert all non-alphanums to ::, so you can type e.g. foo.bar
+    # or foo-bar and they will be converted to foo::bar
+    $word =~ s/\W+/::/g;
+
+    Complete::Util::mimic_shell_dir_completion(
+        completion => Complete::Module::complete_module(
+            word      => $word,
+            find_pmc  => 0,
+            find_pod  => 0,
+            separator => '/',
+            ci        => 1, # convenience
+        )
+    );
+};
+
+our $_complete_pod = sub {
+    require Complete::Module;
+    require Complete::Util;
+    my %args = @_;
+
+    my $word = $args{word} // '';
+
+    # convenience, convert all non-alphanums to ::, so you can type e.g. foo.bar
+    # or foo-bar and they will be converted to foo::bar
+    $word =~ s/\W+/::/g;
+
+    Complete::Util::mimic_shell_dir_completion(
+        completion => Complete::Module::complete_module(
+            word      => $word,
+            find_pm   => 0,
+            find_pmc  => 0,
+            find_pod  => 1,
+            separator => '/',
+            ci        => 1, # convenience
+        )
+    );
+};
+
 1;
 # ABSTRACT: Command line to manipulate Perl module files
 

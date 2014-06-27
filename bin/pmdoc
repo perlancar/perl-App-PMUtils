@@ -4,6 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use App::PMUtils;
 use Perinci::CmdLine 1.04;
 
 # DATE
@@ -24,20 +25,7 @@ _
             schema => 'str*',
             req => 1,
             pos => 0,
-            completion => sub {
-                require Complete::Module;
-                require Complete::Util;
-                my %args = @_;
-                Complete::Util::mimic_shell_dir_completion(
-                    completion => Complete::Module::complete_module(
-                        word      => $args{word},
-                        find_pmc  => 0,
-                        find_pod  => 1,
-                        separator => '/',
-                        ci        => 1,
-                    )
-                );
-            },
+            completion => $App::PMUtils::_complete_module,
         },
     },
     deps => {
@@ -45,7 +33,6 @@ _
     },
 };
 sub pmdoc {
-    require SHARYANTO::Module::Path;
     my %args = @_;
     my $mod = $args{module};
     $mod =~ s!/!::!g;
