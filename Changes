@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.09    2014-06-27 (SHARYANTO)
+
+        - No functional changes.
+
+        - Re-release with experiment utility 'pmless-colon' removed.
+
+
 0.08    2014-06-27 (SHARYANTO)
 
         - [ux] Convenience: all non-alphanums will be replaced by '/' during
