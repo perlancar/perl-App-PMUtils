@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.10    2014-06-27 (SHARYANTO)
+
+        - pmcost, pmpath, podpath now accept many arguments.
+
+        - Turn off log_any_app so programs start a bit faster.
+
+
 0.09    2014-06-27 (SHARYANTO)
 
         - No functional changes.

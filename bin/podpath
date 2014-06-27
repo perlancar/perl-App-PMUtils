@@ -47,7 +47,7 @@ sub podpath {
             module=>$pod, find_pmc=>0, find_pm=>0, find_pod=>1, find_prefix=>0,
             abs=>$args{abs}, all=>$args{all});
         $found++ if $mpath;
-        push @$res, @$mods > 1 ? {pod=>$pod, path=>$mpath} : $mpath;
+        push @$res, @$pods > 1 ? {pod=>$pod, path=>$mpath} : $mpath;
     }
 
     if ($found) {
