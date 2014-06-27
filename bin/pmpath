@@ -6,22 +6,52 @@ use warnings;
 
 use App::PMUtils;
 use Perinci::CmdLine 1.04;
-use Perinci::Sub::Util qw(gen_modified_sub);
 use SHARYANTO::Module::Path;
 
 # DATE
 # VERSION
 
-gen_modified_sub(
-    output_name => 'pmpath',
-    base_name   => 'SHARYANTO::Module::Path::module_path',
-    modify_args => {
-        module => sub {
-            my $as = shift;
-            $as->{completion} = $App::PMUtils::_complete_module;
+our %SPEC;
+$SPEC{pmpath} = {
+    v => 1.1,
+    summary => 'Get path to locally installed Perl module',
+    args => {
+        module => {
+            schema => ['array*', of=>'str*', min_len=>1],
+            req    => 1,
+            pos    => 0,
+            greedy => 1,
+            element_completion => $App::PMUtils::_complete_module,
+        },
+        all => {
+            schema => 'bool',
+            cmdline_aliases => {a=>{}},
+        },
+        abs => {
+            schema => 'bool',
+            cmdline_aliases => {P=>{}},
         },
     },
-);
+    "x.perinci.cmdline.default_format" => 'text-simple',
+};
+sub pmpath {
+    require SHARYANTO::Module::Path;
+    my %args = @_;
+
+    my $mods = $args{module};
+    my $res = [];
+    my $found;
+
+    for my $mod (@{$mods}) {
+        my $mpath = SHARYANTO::Module::Path::module_path(
+            module=>$mod, find_pmc=>0, find_pod=>0, find_prefix=>0,
+            abs=>$args{abs}, all=>$args{all});
+        $found++ if $mpath;
+        push @$res, @$mods > 1 ? {module=>$mod, path=>$mpath} : $mpath;
+    }
+
+    [$found ? 200:404, "OK", $res];
+}
 
 Perinci::CmdLine->new(
     log_any_app => 0,
