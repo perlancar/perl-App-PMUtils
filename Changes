@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.08    2014-06-27 (SHARYANTO)
+
+        - [ux] Convenience: all non-alphanums will be replaced by '/' during
+          completion, so you can type 'text-ansi' and it will be replaced with
+          'Text/ANSI' for example.
+
+
 0.07    2014-06-26 (SHARYANTO)
 
         - Add test script: pmless-colon.
