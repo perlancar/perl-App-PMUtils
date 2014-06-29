@@ -66,6 +66,7 @@ our $_complete_pod = sub {
 This distribution provides the following command-line utilities:
 
  pminfo
+ pmversion
  pmpath
  podpath
  pmless

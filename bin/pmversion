@@ -12,18 +12,10 @@ use Perinci::CmdLine 1.13;
 # VERSION
 
 our %SPEC;
-$SPEC{pminfo} = {
+$SPEC{pmversion} = {
     v => 1.1,
-    summary => 'Get Perl module information',
+    summary => 'Get Perl module version',
     description => <<'_',
-
-Will show this information about each Perl module:
-
-* path
-* version
-* number of lines of code
-*
-
 _
     args => {
         module => {
@@ -43,49 +35,56 @@ sub pminfo {
     my %args = @_;
     my $mods = $args{module};
 
+    my $found;
     my $res = [];
     for my $mod (@$mods) {
         $mod =~ s!/!::!g;
-        my $rec = {module=>$mod};
-        push @$res, $rec;
         my $mpath = SHARYANTO::Module::Path::module_path(module=>$mod);
         $rec->{path} = $mpath;
-        next unless $mpath;
+        unless ($mpath) {
+            push @$res, "Module $mod is not installed";
+            next;
+        }
+        $found++;
         # load to get $VERSION & $DATE
         {
             no strict 'refs';
             Module::Load::load($mod);
-            $rec->{version} = ${"$mod\::VERSION"};
-            $rec->{date} = ${"$mod\::DATE"};
-        }
-        if (open my($fh), "<", $mpath) {
-            my $lines = 0; $lines++ while <$fh>;
-            $rec->{lines} = $lines;
+            my $v = ${"$mod\::VERSION"};
+            if (defined $v) {
+                push @$res, (@$mods > 1 ? "$mod $v" : $v);
+            } else {
+                push @$res, "Module $mod does not define \$VERSION";
+            }
         }
     }
 
-    $res;
+    if (!$found) {
+        [404, "No such module: " . join(", "@$mods)];
+    } else {
+        [200, "OK", $res];
+    }
 }
 
 Perinci::CmdLine->new(
     log_any_app => 0,
-    url => '/main/pminfo',
+    url => '/main/pmversion',
 )->run;
 
-# ABSTRACT: Get Perl module information
-# PODNAME: pminfo
+# ABSTRACT: Get Perl module version
+# PODNAME: pmversion
 
 =head1 SYNOPSIS
 
- % pminfo Some::Module Another::Module
+ % pmversion Some::Module Another::Module
 
 To active bash completion:
 
- % complete -C pminfo pminfo ; # can be put in bash startup file e.g. .bashrc
- % pminfo Some<tab>
+ % complete -C pmversion pmversion ; # can be put in bash startup file e.g. .bashrc
+ % pmversion Some<tab>
 
 
 =head1 SEE ALSO
 
-L<pmversion>
+L<pminfo>
 
