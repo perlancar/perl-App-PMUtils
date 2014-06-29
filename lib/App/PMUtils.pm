@@ -104,8 +104,8 @@ bash is completing C<ANSITabl> instead of what we want C<Text::ANSITabl>.
 
 The solution is to use quotes, e.g.
 
- % pmpath "Text:
- % pmpath 'Text:
+ % pmpath "Text:<tab>
+ % pmpath 'Text:<tab>
 
 or, use /.
 
