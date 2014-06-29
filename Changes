@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.13    2014-06-29 (SHARYANTO)
+
+        - Add pmversion.
+
+        - Tweak completion.
+
+
 0.12    2014-06-29 (SHARYANTO)
 
         - pmpath: Include prefix by default, so we can do e.g.: cd `pmpath
