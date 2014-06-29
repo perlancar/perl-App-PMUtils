@@ -19,14 +19,14 @@ our $_complete_module = sub {
     $word =~ s/\W+/::/g;
 
     Complete::Util::mimic_shell_dir_completion(
-        completion => Complete::Module::complete_module(
+        Complete::Module::complete_module(
             word      => $word,
             find_pmc  => 0,
             find_pod  => 0,
             separator => '/',
             ci        => 1, # convenience
         )
-    );
+      );
 };
 
 our $_complete_pod = sub {
@@ -41,7 +41,7 @@ our $_complete_pod = sub {
     $word =~ s/\W+/::/g;
 
     Complete::Util::mimic_shell_dir_completion(
-        completion => Complete::Module::complete_module(
+        Complete::Module::complete_module(
             word      => $word,
             find_pm   => 0,
             find_pmc  => 0,
@@ -49,7 +49,7 @@ our $_complete_pod = sub {
             separator => '/',
             ci        => 1, # convenience
         )
-    );
+      );
 };
 
 1;
