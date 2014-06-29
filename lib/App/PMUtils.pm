@@ -83,7 +83,7 @@ This distribution provides the following command-line utilities:
 For example, L<mpath> in L<Module::Path> distribution, L<mversion> in
 L<Module::Version> distribution, etc.
 
-True. The main point of these utilities are shell tab completion, to save
+True. The main point of these utilities is shell tab completion, to save
 typing.
 
 =head2 In shell completion, why do you use / (slash) instead of :: (double colon) as it should be?
