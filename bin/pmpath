@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use App::PMUtils;
-use Perinci::CmdLine 1.04;
+use Perinci::CmdLine 1.13;
 use SHARYANTO::Module::Path;
 
 # DATE
