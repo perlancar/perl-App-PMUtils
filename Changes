@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.11    2014-06-29 (SHARYANTO)
+
+        - [ux] Use / *or* :: as separator if user already types ::, and give
+          explanation in POD on how to workaround bash word breaking issue (i.e.
+          by using quotes).
+
+
 0.10    2014-06-27 (SHARYANTO)
 
         - pmcost, pmpath, podpath now accept many arguments.
