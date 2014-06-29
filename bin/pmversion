@@ -59,7 +59,7 @@ sub pmversion {
     }
 
     if (!$found) {
-        [404, "No such module: " . join(", ", @$mods)];
+        [404, "No such module(s): " . join(", ", @$mods)];
     } else {
         [200, "OK", $res];
     }
