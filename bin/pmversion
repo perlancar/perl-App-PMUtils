@@ -26,9 +26,9 @@ _
             element_completion => $App::PMUtils::_complete_module,
         },
     },
-    result_naked => 1,
+    "x.perinci.cmdline.default_format" => 'text-simple',
 };
-sub pminfo {
+sub pmversion {
     require Module::Load;
     require SHARYANTO::Module::Path;
 
@@ -40,7 +40,6 @@ sub pminfo {
     for my $mod (@$mods) {
         $mod =~ s!/!::!g;
         my $mpath = SHARYANTO::Module::Path::module_path(module=>$mod);
-        $rec->{path} = $mpath;
         unless ($mpath) {
             push @$res, "Module $mod is not installed";
             next;
@@ -60,7 +59,7 @@ sub pminfo {
     }
 
     if (!$found) {
-        [404, "No such module: " . join(", "@$mods)];
+        [404, "No such module: " . join(", ", @$mods)];
     } else {
         [200, "OK", $res];
     }
