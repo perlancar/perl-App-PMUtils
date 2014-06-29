@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.12    2014-06-29 (SHARYANTO)
+
+        - pmpath: Include prefix by default, so we can do e.g.: cd `pmpath
+          Dist::Zilla::`.
+
+
 0.11    2014-06-29 (SHARYANTO)
 
         - [ux] Use / *or* :: as separator if user already types ::, and give
