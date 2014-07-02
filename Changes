@@ -1,5 +1,14 @@
 Revision history for App-PMUtils
 
+0.15    2014-06-29 (SHARYANTO)
+
+        - No functional changes.
+
+        - [Bugfix] scripts/ or bin/ files need to have something like #!perl and
+          not #!/usr/bin/env perl so it can be replaced to the path of perl when
+          installing [RT#96884]
+
+
 0.14    2014-06-29 (SHARYANTO)
 
         - Fix syntax errors (steven--) and tweaks.
