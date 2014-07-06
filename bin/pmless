@@ -58,4 +58,6 @@ To active bash completion:
 
  % complete -C pmless pmless ; # can be put in bash startup file e.g. .bashrc
  % pmless Some<tab>
+ % pmless test/builder/mo<tab> ; # resolve to Test/Builder/Module, can resolve case
+ % pmless "Text::Abb<tab>      ; # use quote (' or ") if you want to use :: as separator
 
