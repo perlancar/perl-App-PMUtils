@@ -21,7 +21,7 @@ $SPEC{podpath} = {
             req    => 1,
             pos    => 0,
             greedy => 1,
-            element_completion => $App::PMUtils::_complete_module,
+            element_completion => $App::PMUtils::_complete_pod,
         },
         all => {
             schema => 'bool',
