@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.16    2014-07-06 (SHARYANTO)
+
+        - Fix completion for podpath.
+
+        - Add more completion examples.
+
+
 0.15    2014-06-29 (SHARYANTO)
 
         - No functional changes.
@@ -93,4 +100,3 @@ Revision history for App-PMUtils
 0.01    2014-06-24 (SHARYANTO)
 
         - First release.
-
