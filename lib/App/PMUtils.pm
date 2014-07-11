@@ -20,8 +20,6 @@ our $_complete_module = sub {
     my $sep = $word =~ /::/ ? '::' : '/';
     $word =~ s/\W+/::/g;
 
-    my $shcomp = {};
-
     {
         completion => Complete::Module::complete_module(
             word      => $word,
