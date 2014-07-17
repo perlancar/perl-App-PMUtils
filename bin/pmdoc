@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use App::PMUtils;
-use Perinci::CmdLine 1.13;
+use Perinci::CmdLine::Lite;
 
 # DATE
 # VERSION
@@ -41,8 +41,7 @@ sub pmdoc {
     # [200]; # unreachable
 }
 
-Perinci::CmdLine->new(
-    log_any_app => 0,
+Perinci::CmdLine::Lite->new(
     url => '/main/pmdoc',
 )->run;
 
