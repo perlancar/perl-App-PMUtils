@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.17    2014-07-18 (SHARYANTO)
+
+        - Switch from Perinci::CmdLine to Perinci::CmdLine::Lite for faster tab
+          completion.
+
+
 0.16    2014-07-06 (SHARYANTO)
 
         - Fix completion for podpath.
