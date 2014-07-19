@@ -28,7 +28,6 @@ our $_complete_module = sub {
             separator => $sep,
             ci        => 1, # convenience
         ),
-        is_path    => 1,
         path_sep   => $sep,
     };
 };
@@ -51,7 +50,6 @@ our $_complete_pod = sub {
             separator => '/',
             ci        => 1, # convenience
         ),
-        is_path    => 1,
         path_sep   => $sep,
     };
 };
