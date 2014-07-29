@@ -1,5 +1,14 @@
 Revision history for App-PMUtils
 
+0.18    2014-07-29 (SHARYANTO)
+
+        - Adjust to Complete::Bash 0.06.
+
+        - Accept 'Foo/Bar.pm' (will be interpreted as 'Foo/Bar' -> 'Foo::Bar')
+          for convenience, e.g. if user copy-pastes from some text or error
+          message.
+
+
 0.17    2014-07-18 (SHARYANTO)
 
         - Switch from Perinci::CmdLine to Perinci::CmdLine::Lite for faster tab
