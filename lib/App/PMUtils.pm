@@ -14,7 +14,7 @@ our $_complete_module = sub {
     my $word = $args{word} // '';
 
     # convenience: allow Foo/Bar.{pm,pod,pmc}
-    $word =~ s/\.{pm,pmc,pod}\z//;
+    $word =~ s/\.(pm|pmc|pod)\z//;
 
     # compromise, if word doesn't contain :: we use the safer separator /, but
     # if already contains '::' we use '::' (but this means in bash user needs to
