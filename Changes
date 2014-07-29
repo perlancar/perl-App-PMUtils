@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.19    2014-07-29 (SHARYANTO)
+
+        - No functional changes.
+
+        - Fix regex syntax, derp.
+
+
 0.18    2014-07-29 (SHARYANTO)
 
         - Adjust to Complete::Bash 0.06.
