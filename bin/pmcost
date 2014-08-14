@@ -6,7 +6,7 @@ use warnings;
 use Log::Any '$log';
 
 use App::PMUtils;
-use Perinci::CmdLine::Lite;
+use Perinci::CmdLine::Any -prefer_lite=>1;
 
 # DATE
 # VERSION
@@ -61,7 +61,7 @@ sub pmcost {
     # [200]; # won't get reached
 }
 
-Perinci::CmdLine::Lite->new(
+Perinci::CmdLine::Any->new(
     url => '/main/pmcost',
 )->run;
 
