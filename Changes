@@ -1,5 +1,10 @@
 Revision history for App-PMUtils
 
+0.20     2014-08-16 (SHARYANTO) - Happy 19th CPAN Day!
+
+         - Use Perinci::CmdLine::Any.
+
+
 0.19    2014-07-29 (SHARYANTO)
 
         - No functional changes.
