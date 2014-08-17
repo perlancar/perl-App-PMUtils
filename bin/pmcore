@@ -1,0 +1,75 @@
+#!perl
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any '$log';
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+# DATE
+# VERSION
+
+our %SPEC;
+$SPEC{pmcore} = {
+    v => 1.1,
+    summary => 'Check if Perl module is in core',
+    description => <<'_',
+
+
+
+_
+    args => {
+        module => {
+            schema => 'str*',
+            req    => 1,
+            pos    => 0,
+            completion => $App::PMUtils::_complete_module,
+        },
+        modver => {
+            schema => 'str*',
+            pos    => 1,
+            # XXX complete using Module::Corelist
+        },
+    },
+    result_naked=>1,
+};
+sub pmcore {
+    require Module::CoreList;
+
+    my %args = @_;
+    my $mod = $args{module};
+    $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
+    my $ver = $args{modver};
+
+    my $ans;
+    if ($ver) {
+        $ans = Module::CoreList->first_release($mod, $ver);
+    } else {
+        $ans = Module::CoreList->first_release($mod);
+    }
+    my $modv = "$mod".($ver ? " version $ver" : "");
+
+    if ($ans) {
+        return "$modv was first released with perl $ans";
+    } else {
+        return "$modv was not in CORE (or so I think)";
+    }
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmcore',
+)->run;
+
+# ABSTRACT: Check if Perl module is in core
+# PODNAME: pmcore
+
+=head1 SYNOPSIS
+
+ % pmcore MIME::Base64
+ MIME::Base64 was first released with perl v5.7.3
+
+ % pmcore Foo
+ Foo was not in CORE (or so I think)
+

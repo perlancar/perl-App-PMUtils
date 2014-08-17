@@ -64,15 +64,16 @@ our $_complete_pod = sub {
 
 This distribution provides the following command-line utilities:
 
- pminfo
- pmversion
- pmpath
- podpath
- pmless
- pmedit
+ pmcore
  pmcost
  pmdoc
+ pmedit
+ pminfo
+ pmless
  pmman
+ pmpath
+ pmversion
+ podpath
 
 
 =head1 FAQ
