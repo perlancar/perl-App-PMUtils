@@ -20,12 +20,12 @@ $SPEC{pmbin} = {
 
 Does this happen often with you: you install a CPAN module:
 
-    % cpanm -n Some::Module
+    % cpanm -n Finance::Bank::ID::BCA
 
 The CPAN distribution is supposed to contain some CLI utilities, but it is not
 obvious what the name is. So you do:
 
-    % man Some::Module
+    % man Finance::Bank::ID::BCA
 
 to find out, and even the module's POD doesn't give the name of the utility
 sometimes. You might even open your browser and go to MetaCPAN. Or
@@ -33,8 +33,17 @@ download+extract+view the tarball just to find out.
 
 Now there's a simpler alternative:
 
-    % pmbin Some::Module
-    % pmbin -P Some::Module Another::Mod ; # show full path, process multiple modules at once
+    % pmbin Finance::Bank::ID::BCA
+    download-bca
+    parse-bca-statement
+
+Show full path, process multiple modules at once:
+
+    % pmbin -P Finance/Bank/ID/BCA Finance::Bank::ID::Mandiri
+    /home/user/perl5/perlbrew/perls/perl-5.18.2/bin/download-bca
+    /home/user/perl5/perlbrew/perls/perl-5.18.2/bin/parse-bca-statement
+    /home/user/perl5/perlbrew/perls/perl-5.18.2/bin/download-mandiri
+    /home/user/perl5/perlbrew/perls/perl-5.18.2/bin/parse-mandiri-statement
 
 You even get tab completion for free.
 
