@@ -1,5 +1,13 @@
 Revision history for App-PMUtils
 
+0.25     2014-09-05 (PERLANCAR)
+
+         - No functional changes.
+
+         - Add instruction in POD to activate bash tab completion for all
+           programs.
+
+
 0.24     2014-09-05 (PERLANCAR)
 
          - Add pmlist.
