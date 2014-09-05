@@ -1,5 +1,13 @@
 Revision history for App-PMUtils
 
+0.23     2014-09-05 (PERLANCAR)
+
+         - No functional changes.
+
+         - [Doc] Tweak pmbin's description: show real-life example, show sample
+           output, explain how it works.
+
+
 0.22     2014-09-05 (PERLANCAR)
 
          - Add pmbin.
