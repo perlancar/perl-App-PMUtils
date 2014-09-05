@@ -24,6 +24,7 @@ _
             schema  => 'str*',
             default => '',
             pos     => 0,
+            element_completion => $App::PMUtils::_complete_module,
         },
         pm => {
             schema  => 'bool',
