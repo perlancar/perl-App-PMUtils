@@ -32,7 +32,7 @@ $SPEC{pmpath} = {
             cmdline_aliases => {P=>{}},
         },
     },
-    "x.perinci.cmdline.default_format" => 'text-simple',
+    "cmdline.default_format" => 'text-simple',
 };
 sub pmpath {
     require SHARYANTO::Module::Path;

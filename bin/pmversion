@@ -26,7 +26,7 @@ _
             element_completion => $App::PMUtils::_complete_module,
         },
     },
-    "x.perinci.cmdline.default_format" => 'text-simple',
+    "cmdline.default_format" => 'text-simple',
 };
 sub pmversion {
     require Module::Load;
