@@ -77,6 +77,16 @@ This distribution provides the following command-line utilities:
  pmversion
  podpath
 
+These utilities have tab completion capability. To activate it, put these lines
+to your bash startup file (e.g. C</etc/bash.bashrc>, C<~/.bash_profile>, or
+C<~/.bashrc>):
+
+ for p in \
+   pmbin pmcore pmcost pmdoc pmedit pminfo pmless pmlist pmman pmpath \
+   pmversion podpath; do
+     complete -C $p $p
+ done
+
 
 =head1 FAQ
 
