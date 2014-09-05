@@ -1,0 +1,94 @@
+#!perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+# DATE
+# VERSION
+
+our %SPEC;
+$SPEC{pmlist} = {
+    v => 1.1,
+    summary => 'List Perl modules (and PODs, and module prefixes)',
+    description => <<'_',
+
+This is basically a CLI interface to `Module::List`, with tab completion.
+
+_
+    args => {
+        query => {
+            schema  => 'str*',
+            default => '',
+            pos     => 0,
+        },
+        pm => {
+            schema  => 'bool',
+            default => 1,
+        },
+        pod => {
+            schema  => 'bool',
+            default => 1,
+        },
+        prefix => {
+            schema  => 'bool',
+            default => 1,
+        },
+        recursive => {
+            schema  => 'bool',
+            cmdline_aliases => { recurse => {}, r => {} },
+        },
+    },
+    "cmdline.default_format" => 'text-simple',
+};
+sub pmlist {
+    require Module::List;
+    my %args = @_;
+
+    my $query = $args{query} // "";
+    $query =~ s!/!::!g; # convenience
+
+    # i wonder why Module::List is not more forgiving
+    $query .= "::" unless !length($query) || $query =~ /::\z/;
+
+    my $mods = Module::List::list_modules(
+        $query,
+        {
+            list_prefixes => $args{prefix} // 1,
+            list_modules  => $args{pm} // 1,
+            list_pod      => $args{pod} // 1,
+            recurse       => $args{recursive},
+        });
+    my @res;
+    for (sort keys %$mods) {
+        push @res, $_;
+    }
+    [200, "OK", \@res];
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmlist',
+)->run;
+
+# ABSTRACT: List Perl modules (and PODs, and module prefixes)
+# PODNAME: pmlist
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % pmlist Text::
+
+See all other options:
+
+ % pmlist --help
+
+To active bash completion:
+
+ % complete -C pmlist pmlist   ; # can be put in bash startup file e.g. .bashrc
+ % pmlist Tex<tab>
+ % pmlist text/tabl<tab>       ; # resolve to Text/Table, can resolve case
+ % pmlist "Text::Ta<tab>       ; # use quote (' or ") if you want to use :: as separator

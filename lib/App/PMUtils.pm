@@ -71,6 +71,7 @@ This distribution provides the following command-line utilities:
  pmedit
  pminfo
  pmless
+ pmlist
  pmman
  pmpath
  pmversion
