@@ -9,7 +9,6 @@ use warnings;
 
 use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
-use SHARYANTO::Module::Path;
 
 our %SPEC;
 $SPEC{pmbin} = {
@@ -125,4 +124,3 @@ To active bash completion:
  % pmbin Some<tab>
  % pmbin app/pmunins<tab>  ; # resolve to App/pmuninstall, can resolve case
  % pmbin "App::pm<tab>    ; # use quote (' or ") if you want to use :: as separator
-
