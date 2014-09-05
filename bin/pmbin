@@ -47,6 +47,9 @@ Show full path, process multiple modules at once:
 
 You even get tab completion for free.
 
+`pmbin` works by locating the `.packlist` file for the module (which contains
+the list of installed files) and filter only the `/(bin,scripts?)/` ones.
+
 _
     args => {
         module => {
