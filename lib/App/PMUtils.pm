@@ -64,6 +64,7 @@ our $_complete_pod = sub {
 
 This distribution provides the following command-line utilities:
 
+ pmbin
  pmcore
  pmcost
  pmdoc

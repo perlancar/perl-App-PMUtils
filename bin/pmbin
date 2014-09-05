@@ -1,0 +1,116 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+use SHARYANTO::Module::Path;
+
+our %SPEC;
+$SPEC{pmbin} = {
+    v => 1.1,
+    summary => 'Given an installed Perl module, list scripts that '.
+        'come with its distribution',
+    description => <<'_',
+
+Does this happen often with you: you install a CPAN module:
+
+    % cpanm -n Some::Module
+
+The CPAN distribution is supposed to contain some CLI utilities, but it is not
+obvious what the name is. So you do:
+
+    % man Some::Module
+
+to find out, and even the module's POD doesn't give the name of the utility
+sometimes. You might even open your browser and go to MetaCPAN. Or
+download+extract+view the tarball just to find out.
+
+Now there's a simpler alternative:
+
+    % pmbin Some::Module
+    % pmbin -P Some::Module Another::Mod ; # show full path, process multiple modules at once
+
+You even get tab completion for free.
+
+_
+    args => {
+        module => {
+            schema => ['array*', of=>'str*', min_len=>1],
+            req    => 1,
+            pos    => 0,
+            greedy => 1,
+            element_completion => $App::PMUtils::_complete_module,
+        },
+        full_path => {
+            summary => 'Show full path instead of just filenames',
+            schema => 'bool',
+            cmdline_aliases => {P=>{}},
+        },
+    },
+    "cmdline.default_format" => 'text-simple',
+};
+sub pmbin {
+    require SHARYANTO::Dist::Util;
+    my %args = @_;
+
+    my $mods = $args{module};
+    my $res = [];
+    my $found;
+
+    for my $mod (@{$mods}) {
+        my $path = SHARYANTO::Dist::Util::packlist_for($mod);
+        next unless $path && (-f $path);
+        $found++;
+        open my $fh, "<", $path or do {
+            warn "Can't open $path: $!\n";
+            next;
+        };
+        for (<$fh>) {
+            chomp;
+            next unless m!/(bin|scripts?)/!;
+            s!.+/!! unless $args{full_path};
+            push @$res, $_;
+        }
+    }
+
+    if ($found) {
+        [200, "OK", $res];
+    } else {
+        [404, "Can't find .packlist for module(s)"];
+    }
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmbin',
+)->run;
+
+# ABSTRACT: Given an installed Perl module, list scripts that come with its distribution
+# PODNAME: pmbin
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % pmbin Some::Module
+
+Return full path instead of just names:
+
+ % pmbin -P Some::Module
+
+See all other options:
+
+ % pmbin --help
+
+To active bash completion:
+
+ % complete -C pmbin pmbin ; # can be put in bash startup file e.g. .bashrc
+ % pmbin Some<tab>
+ % pmbin app/pmunins<tab>  ; # resolve to App/pmuninstall, can resolve case
+ % pmbin "App::pm<tab>    ; # use quote (' or ") if you want to use :: as separator
+
