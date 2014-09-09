@@ -58,7 +58,7 @@ our $_complete_pod = sub {
 };
 
 1;
-# ABSTRACT: Command line to manipulate Perl module files
+# ABSTRACT: Command-line utilities related to Perl modules
 
 =head1 SYNOPSIS
 
