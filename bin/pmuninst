@@ -1,0 +1,53 @@
+#!perl
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any '$log';
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+# DATE
+# VERSION
+
+our %SPEC;
+$SPEC{pmuninst} = {
+    v => 1.1,
+    summary => 'Uninstall an installed Perl module (using pm-uninstall)',
+    args => {
+        module => {
+            schema => 'str*',
+            req    => 1,
+            pos    => 0,
+            completion => $App::PMUtils::_complete_module,
+        },
+        modver => {
+            schema => 'str*',
+            pos    => 1,
+            # XXX complete using Module::Corelist
+        },
+    },
+    result_naked=>1,
+    deps => {
+        {exec=>'pm-uninstall'},
+    },
+};
+sub pmuninst {
+    my %args = @_;
+    my $mod = $args{module};
+    $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
+    exec "pm-uninstall", $mod;
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmuninst',
+)->run;
+
+# ABSTRACT: Uninstall an installed Perl module (using pm-uninstall)
+# PODNAME: pmuninst
+
+=head1 SYNOPSIS
+
+ % pmuninst App::Stopwatch
+

@@ -74,6 +74,7 @@ This distribution provides the following command-line utilities:
  pmlist
  pmman
  pmpath
+ pmuninst
  pmversion
  podpath
 
@@ -83,7 +84,7 @@ C<~/.bashrc>):
 
  for p in \
    pmbin pmcore pmcost pmdoc pmedit pminfo pmless pmlist pmman pmpath \
-   pmversion podpath; do
+   pmuninst pmversion podpath; do
      complete -C $p $p
  done
 
