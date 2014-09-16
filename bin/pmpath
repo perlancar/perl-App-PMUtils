@@ -74,7 +74,11 @@ sub pmpath {
     if ($found) {
         [200, "OK", $res];
     } else {
-        [404, "No such module"];
+        if ($args{dir}) {
+            [200, "OK (not found)", "."];
+        } else {
+            [404, "No such module"];
+        }
     }
 }
 
