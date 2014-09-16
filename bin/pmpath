@@ -30,6 +30,21 @@ $SPEC{pmpath} = {
             schema => 'bool',
             cmdline_aliases => {P=>{}},
         },
+        dir => {
+            summary => 'Show directory instead of path',
+            description => <<'_',
+
+Also, will return `.` if not found, so you can conveniently do this on a Unix
+shell:
+
+    % cd `pmpath -Pd Moose`
+
+and it won't change directory if the module doesn't exist.
+
+_
+            schema  => ['bool', is=>1],
+            cmdline_aliases => {d=>{}},
+        },
     },
     "cmdline.default_format" => 'text-simple',
 };
@@ -46,7 +61,14 @@ sub pmpath {
             module=>$mod, find_pmc=>0, find_pod=>0, find_prefix=>1,
             abs=>$args{abs}, all=>$args{all});
         $found++ if $mpath;
-        push @$res, @$mods > 1 ? {module=>$mod, path=>$mpath} : $mpath;
+        for (ref($mpath) eq 'ARRAY' ? @$mpath : ($mpath)) {
+            if ($args{dir}) {
+                require File::Spec;
+                my ($vol, $dir, $file) = File::Spec->splitpath($_);
+                $_ = $dir;
+            }
+            push @$res, @$mods > 1 ? {module=>$mod, path=>$_} : $_;
+        }
     }
 
     if ($found) {
