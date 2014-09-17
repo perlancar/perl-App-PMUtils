@@ -122,4 +122,9 @@ The solution is to use quotes, e.g.
 
 or, use /.
 
+
+=head1 SEE ALSO
+
+L<App::ProgUtils>, a similarly spirited distribution.
+
 =cut
