@@ -1,0 +1,91 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any '$log';
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+our %SPEC;
+$SPEC{pmsub} = {
+    v => 1.1,
+    summary => 'List subroutines defined in a Perl module (or file)',
+    description => <<'_',
+
+
+
+_
+    args => {
+        module => {
+            schema => 'str*',
+            pos    => 0,
+            completion => $App::PMUtils::_complete_module,
+        },
+        file => {
+            summary => 'Specify file instead of module',
+            schema  => 'str*',
+            cmdline_aliases => {f=>{}},
+        },
+    },
+    result_naked=>1,
+};
+sub pmsub {
+    require Compiler::Lexer;
+    require SHARYANTO::Module::Path;
+
+    my %args = @_;
+    my $path;
+    if (defined $args{module}) {
+        my $mod = $args{module};
+        $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
+        $path = SHARYANTO::Module::Path::module_path(module=>$mod);
+        die "Can't find module '$mod'" unless $path;
+    } elsif (defined $args{file}) {
+        $path = $args{file};
+        (-f $path) or die "No such file '$path'\n";
+    } else {
+        die "Please specify module or file\n";
+    }
+
+    my $lexer = Compiler::Lexer->new($path);
+    my $ct = do {
+        undef $/;
+        open my $fh, "<", $path or die "Can't open '$path': $!\n";
+        <$fh>;
+    };
+    my $tokens = $lexer->tokenize($ct);
+    my @subs;
+    for my $i (0..@$tokens-1) {
+        my $t = $tokens->[$i];
+        if ($i < @$tokens-1 && $t->{name} eq 'FunctionDecl') {
+            my $t2 = $tokens->[$i+1];
+            if ($t2->{name} eq 'Function') {
+                push @subs, $t2->{data};
+            }
+        }
+    }
+    \@subs;
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmsub',
+)->run;
+
+# ABSTRACT: List subroutines defined in a Perl module (or file)
+# PODNAME: pmsub
+
+=head1 SYNOPSIS
+
+ % pmsub Some::Module
+ % pmsub --file Some/script.pl
+
+To active bash completion:
+
+ % complete -C pmsub pmsub; # can be put in bash startup file e.g. .bashrc
+ % pmsub MIME/<tab>
+ % pmsub "MIME::B<tab>    ; # use quote (' or ") if you want to use :: as separator
