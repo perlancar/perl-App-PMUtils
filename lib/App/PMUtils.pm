@@ -125,6 +125,8 @@ or, use /.
 
 =head1 SEE ALSO
 
+L<App::PlUtils>, distribution that provides utilities related to Perl scripts.
+
 L<App::ProgUtils>, a similarly spirited distribution.
 
 =cut
