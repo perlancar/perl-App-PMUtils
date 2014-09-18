@@ -30,7 +30,7 @@ $SPEC{pmuninst} = {
     },
     result_naked=>1,
     deps => {
-        {exec=>'pm-uninstall'},
+        exec=>'pm-uninstall',
     },
 };
 sub pmuninst {
