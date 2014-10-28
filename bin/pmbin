@@ -72,12 +72,17 @@ sub pmbin {
 
     my $mods = $args{module};
     my $res = [];
-    my $found;
 
+    my $has_ok;
+    my $has_nok;
     for my $mod (@{$mods}) {
         my $path = SHARYANTO::Dist::Util::packlist_for($mod);
-        next unless $path && (-f $path);
-        $found++;
+        unless ($path && (-f $path)) {
+            $has_nok++;
+            next;
+        }
+
+        $has_ok++;
         open my $fh, "<", $path or do {
             warn "Can't open $path: $!\n";
             next;
@@ -90,10 +95,14 @@ sub pmbin {
         }
     }
 
-    if ($found) {
-        [200, "OK", $res];
-    } else {
+    if ($has_ok && $has_nok) {
+        [207, "Some OK", $res];
+    } elsif ($has_ok) {
+        [200, "All OK", $res];
+    } elsif ($has_nok) {
         [404, "Can't find .packlist for module(s)"];
+    } else {
+        [200, "No items"];
     }
 }
 
