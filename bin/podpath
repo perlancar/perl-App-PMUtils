@@ -69,9 +69,3 @@ Basic usage:
 
  % podpath PSGI
 
-To active bash completion:
-
- % complete -C podpath podpath; # can be put in bash startup file e.g. .bashrc
- % podpath PSG<tab>
- % pmcost moose/cookbook/st<tab> ; # resolve to Moose/Cookbook/Style, can resolve case
- % pmcost "Moose::Man<tab>       ; # use quote (' or ") if you want to use :: as separator

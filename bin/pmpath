@@ -103,10 +103,3 @@ See all other options:
 
  % pmpath --help
 
-To active bash completion:
-
- % complete -C pmpath pmpath ; # can be put in bash startup file e.g. .bashrc
- % pmpath Some<tab>
- % pmpath test/builder/mo<tab> ; # resolve to Test/Builder/Module, can resolve case
- % pmpath "Text::Abb<tab>      ; # use quote (' or ") if you want to use :: as separator
-

@@ -87,9 +87,3 @@ See all other options:
 
  % pmlist --help
 
-To active bash completion:
-
- % complete -C pmlist pmlist   ; # can be put in bash startup file e.g. .bashrc
- % pmlist Tex<tab>
- % pmlist text/tabl<tab>       ; # resolve to Text/Table, can resolve case
- % pmlist "Text::Ta<tab>       ; # use quote (' or ") if you want to use :: as separator

@@ -127,9 +127,3 @@ See all other options:
 
  % pmbin --help
 
-To active bash completion:
-
- % complete -C pmbin pmbin ; # can be put in bash startup file e.g. .bashrc
- % pmbin Some<tab>
- % pmbin app/pmunins<tab>  ; # resolve to App/pmuninstall, can resolve case
- % pmbin "App::pm<tab>    ; # use quote (' or ") if you want to use :: as separator
