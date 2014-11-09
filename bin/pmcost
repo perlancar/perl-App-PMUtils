@@ -31,6 +31,10 @@ _
         hide_core => {
             schema => 'bool',
         },
+        sort => {
+            schema => ['str*', in=>[map {($_,"-$_")}
+                                        qw/file time caller order lines/]],
+        },
         hide_noncore => {
             schema => 'bool',
         },
@@ -47,6 +51,7 @@ sub pmcost {
     $de_import .= ",hide_core,1" if $args{hide_core};
     $de_import .= ",hide_noncore,1" if $args{hide_noncore};
     $de_import .= ",show_memsize,1,sort,-memsize" if $args{show_memsize};
+    $de_import .= ",sort,$args{sort}" if $args{sort};
     my @cmd = ($^X, "-MDevel::EndStats=$de_import");
 
     for my $mod (@$mods) {
