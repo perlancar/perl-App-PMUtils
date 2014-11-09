@@ -97,3 +97,7 @@ Perinci::CmdLine::Any->new(
  #   1   2105    10.889ms( 99%)    HTTP/Tiny.pm (loaded by main)
  # End of stats
 
+=head1 SEE ALSO
+
+L<plcost> (from L<App::PlUtils> distribution)
+
