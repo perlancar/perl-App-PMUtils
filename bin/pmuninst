@@ -14,7 +14,7 @@ use Perinci::CmdLine::Any -prefer_lite=>1;
 our %SPEC;
 $SPEC{pmuninst} = {
     v => 1.1,
-    summary => 'Uninstall an installed Perl module (using pm-uninstall)',
+    summary => 'Uninstall an installed Perl module (using cpanm --uninstall)',
     args => {
         module => {
             schema => 'str*',
@@ -22,29 +22,24 @@ $SPEC{pmuninst} = {
             pos    => 0,
             completion => $App::PMUtils::_complete_module,
         },
-        modver => {
-            schema => 'str*',
-            pos    => 1,
-            # XXX complete using Module::Corelist
-        },
     },
     result_naked=>1,
     deps => {
-        exec=>'pm-uninstall',
+        exec=>'cpanm',
     },
 };
 sub pmuninst {
     my %args = @_;
     my $mod = $args{module};
     $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
-    exec "pm-uninstall", $mod;
+    exec "cpanm", "--uninstall", $mod;
 }
 
 Perinci::CmdLine::Any->new(
     url => '/main/pmuninst',
 )->run;
 
-# ABSTRACT: Uninstall an installed Perl module (using pm-uninstall)
+# ABSTRACT: Uninstall an installed Perl module (using cpanm --uninstall)
 # PODNAME: pmuninst
 
 =head1 SYNOPSIS
