@@ -74,12 +74,9 @@ For example, L<mpath> in L<Module::Path> distribution, L<mversion> in
 L<Module::Version> distribution, etc.
 
 True. The main point of these utilities is shell tab completion, to save
-typing.
+typing. For example,
 
-=head2 In shell completion, why do you use / (slash) instead of :: (double colon) as it should be?
-
-If you type module name which doesn't contain any ::, / will be used as
-namespace separator. Otherwise if you already type ::, it will use ::.
+=head2 For shell completion, why do you recommend the use of / (slash) instead of :: (double colon) as it should be?
 
 Colon is problematic because by default it is a word breaking character in bash.
 This means, in this command:
@@ -97,7 +94,11 @@ The solution is to use quotes, e.g.
  % pmpath "Text:<tab>
  % pmpath 'Text:<tab>
 
-or, use /.
+or, use /, which is by default not a word-breaking character in bash.
+
+The utilities are a bit smart: they accept both kinds of separator. If you type
+module name which doesn't contain any ::, / will be used as namespace separator;
+otherwise if you already type ::, it will use :: as the separator.
 
 
 =head1 SEE ALSO
