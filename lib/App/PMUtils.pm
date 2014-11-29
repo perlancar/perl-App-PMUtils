@@ -62,21 +62,8 @@ our $_complete_pod = sub {
 
 =head1 SYNOPSIS
 
-This distribution provides the following command-line utilities:
-
- pmbin
- pmcore
- pmcost
- pmdoc
- pmedit
- pminfo
- pmless
- pmlist
- pmman
- pmpath
- pmuninst
- pmversion
- podpath
+This distribution provides several command-line utilities related to Perl
+modules. The main purpose of these utilities is tab completion.
 
 
 =head1 FAQ
