@@ -24,7 +24,7 @@ our $_complete_module = sub {
     $word =~ s/\W+/::/g;
 
     {
-        completion => Complete::Module::complete_module(
+        words => Complete::Module::complete_module(
             word      => $word,
             find_pmc  => 0,
             find_pod  => 0,
@@ -45,7 +45,7 @@ our $_complete_pod = sub {
     $word =~ s/\W+/::/g;
 
     {
-        completion => Complete::Module::complete_module(
+        words => Complete::Module::complete_module(
             word      => $word,
             find_pm   => 0,
             find_pmc  => 0,

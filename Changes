@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.30    2014-11-28 (PERLANCAR)
+
+	- No functional changes.
+
+	- Adjust to Complete::Bash 0.12.
+
+
 0.29    2014-11-17 (PERLANCAR)
 
         - pmcost: add --sort.
