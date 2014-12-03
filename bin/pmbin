@@ -67,7 +67,7 @@ _
     "cmdline.default_format" => 'text-simple',
 };
 sub pmbin {
-    require SHARYANTO::Dist::Util;
+    require Dist::Util;
     my %args = @_;
 
     my $mods = $args{module};
@@ -76,7 +76,7 @@ sub pmbin {
     my $has_ok;
     my $has_nok;
     for my $mod (@{$mods}) {
-        my $path = SHARYANTO::Dist::Util::packlist_for($mod);
+        my $path = Dist::Util::packlist_for($mod);
         unless ($path && (-f $path)) {
             $has_nok++;
             next;
@@ -126,4 +126,3 @@ Return full path instead of just names:
 See all other options:
 
  % pmbin --help
-
