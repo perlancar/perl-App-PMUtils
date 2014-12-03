@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.32    2014-12-04 (PERLANCAR)
+
+	- No functional changes.
+
+	- Switch {SHARYANTO::,}Dist::Util.
+
+
 0.31    2014-12-03 (PERLANCAR)
 
 	- No functional changes.
