@@ -24,12 +24,12 @@ $SPEC{pmedit} = {
     },
 };
 sub pmedit {
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
     require String::ShellQuote;
 
     my %args = @_;
     my $mod = $args{module};
-    my $mpath = SHARYANTO::Module::Path::module_path(
+    my $mpath = Module::Path::More::module_path(
         module => $mod, find_pmc=>0, find_pod=>0, find_prefix=>0);
     return [412, "Please set EDITOR first"] unless defined($ENV{EDITOR});
     return [500, "Can't find path for $mod"] unless defined $mpath;

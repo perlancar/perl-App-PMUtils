@@ -38,7 +38,7 @@ _
 };
 sub pminfo {
     require Module::Load;
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
 
     my %args = @_;
     my $mods = $args{module};
@@ -48,7 +48,7 @@ sub pminfo {
         $mod =~ s!/!::!g;
         my $rec = {module=>$mod};
         push @$res, $rec;
-        my $mpath = SHARYANTO::Module::Path::module_path(module=>$mod);
+        my $mpath = Module::Path::More::module_path(module=>$mod);
         $rec->{path} = $mpath;
         next unless $mpath;
         # load to get $VERSION & $DATE

@@ -34,7 +34,7 @@ $SPEC{podpath} = {
     "cmdline.default_format" => 'text-simple',
 };
 sub podpath {
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
     my %args = @_;
 
     my $pods = $args{pod};
@@ -42,7 +42,7 @@ sub podpath {
     my $found;
 
     for my $pod (@{$pods}) {
-        my $mpath = SHARYANTO::Module::Path::module_path(
+        my $mpath = Module::Path::More::module_path(
             module=>$pod, find_pmc=>0, find_pm=>0, find_pod=>1, find_prefix=>0,
             abs=>$args{abs}, all=>$args{all});
         $found++ if $mpath;

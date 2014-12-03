@@ -1,14 +1,14 @@
 #!perl
 
+# DATE
+# VERSION
+
 use 5.010;
 use strict;
 use warnings;
 
 use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
-
-# DATE
-# VERSION
 
 our %SPEC;
 $SPEC{pmpath} = {
@@ -49,7 +49,7 @@ _
     "cmdline.default_format" => 'text-simple',
 };
 sub pmpath {
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
     my %args = @_;
 
     my $mods = $args{module};
@@ -57,7 +57,7 @@ sub pmpath {
     my $found;
 
     for my $mod (@{$mods}) {
-        my $mpath = SHARYANTO::Module::Path::module_path(
+        my $mpath = Module::Path::More::module_path(
             module=>$mod, find_pmc=>0, find_pod=>0, find_prefix=>1,
             abs=>$args{abs}, all=>$args{all});
         $found++ if $mpath;

@@ -30,7 +30,7 @@ _
 };
 sub pmversion {
     require Module::Load;
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
 
     my %args = @_;
     my $mods = $args{module};
@@ -39,7 +39,7 @@ sub pmversion {
     my $res = [];
     for my $mod (@$mods) {
         $mod =~ s!/!::!g;
-        my $mpath = SHARYANTO::Module::Path::module_path(module=>$mod);
+        my $mpath = Module::Path::More::module_path(module=>$mod);
         unless ($mpath) {
             push @$res, "Module $mod is not installed";
             next;

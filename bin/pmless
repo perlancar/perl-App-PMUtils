@@ -27,10 +27,10 @@ $SPEC{pmless} = {
     },
 };
 sub pmless {
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
     my %args = @_;
     my $mod = $args{module};
-    my $mpath = SHARYANTO::Module::Path::module_path(
+    my $mpath = Module::Path::More::module_path(
         module => $mod, find_pmc=>0, find_pod=>0, find_prefix=>0);
     if (defined $mpath) {
         system "less", $mpath;
