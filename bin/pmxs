@@ -1,0 +1,65 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+our %SPEC;
+$SPEC{pmxs} = {
+    v => 1.1,
+    summary => 'Check whether an installed Perl module is XS/pure-perl',
+    args => {
+        module => {
+            schema => ['array*', of=>'str*', min_len=>1],
+            req    => 1,
+            pos    => 0,
+            greedy => 1,
+            element_completion => $App::PMUtils::_complete_module,
+        },
+    },
+    "cmdline.default_format" => 'text-simple',
+};
+sub pmxs {
+    require Module::XSOrPP;
+    my %args = @_;
+
+    my $mods = $args{module};
+    my $res = [];
+    my $found;
+
+    for my $mod (@{$mods}) {
+        my $is_xs = Module::XSOrPP::is_xs($mod);
+        $found++ if defined($is_xs);
+        my $f_is_xs = $is_xs ? "XS" : defined($is_xs) ? "PP" : "?";
+        push @$res, @$mods > 1 ? {
+            module=>$mod,
+            xs=>$f_is_xs,
+        } : $f_is_xs;
+    }
+
+    if ($found) {
+        [200, "OK", $res];
+    } else {
+        [404, "No such module"];
+    }
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmxs',
+)->run;
+
+# ABSTRACT:
+# PODNAME: pmxs
+
+=head1 SYNOPSIS
+
+Basic usage: Check whether an installed Perl module is XS/pure-perl
+
+ % pmxs Some::Module
+
