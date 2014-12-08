@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.34    2014-12-08 (PERLANCAR)
+
+	- [ux] [experimental] Convenience in tab completion: change 'dzp'
+	  to 'Dist/Zilla/Plugin/' (and a few other common abbreviations).
+
+
 0.33    2014-12-05 (PERLANCAR)
 
 	- Add utility: pmxs.
