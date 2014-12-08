@@ -13,6 +13,24 @@ our $_complete_module = sub {
 
     my $word = $args{word} // '';
 
+    # convenience: shortcuts (should make this user-configurable in the future).
+    # so if user types 'dzp' it will become 'Dist/Zilla/Plugin/', if she types
+    # 'dzp::' then it will become 'Dist::Zilla::Plugin::'
+    state $shortcuts = {
+        dzp => 'Dist/Zilla/Plugin/',
+        pwp => 'Pod/Weaver/Plugin/',
+        pws => 'Pod/Weaver/Section/',
+    };
+    {
+        my $tmp = lc $word;
+        my $sep;
+        $tmp =~ s!(/|::)\z!! and $sep = $1;
+        if ($shortcuts->{$tmp}) {
+            $word = $shortcuts->{$tmp};
+            if ($sep) { $word =~ s!/!$sep!g }
+        }
+    }
+
     # convenience: allow Foo/Bar.{pm,pod,pmc}
     $word =~ s/\.(pm|pmc|pod)\z//;
 
