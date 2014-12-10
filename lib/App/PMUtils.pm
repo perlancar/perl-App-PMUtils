@@ -92,7 +92,7 @@ For example, L<mpath> in L<Module::Path> distribution, L<mversion> in
 L<Module::Version> distribution, etc.
 
 True. The main point of these utilities is shell tab completion, to save
-typing. For example,
+typing.
 
 =head2 For shell completion, why do you recommend the use of / (slash) instead of :: (double colon) as it should be?
 
