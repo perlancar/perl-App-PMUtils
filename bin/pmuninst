@@ -17,7 +17,7 @@ $SPEC{pmuninst} = {
     summary => 'Uninstall an installed Perl module (using cpanm --uninstall)',
     args => {
         module => {
-            schema => ['array*', of=>'str*'],
+            schema => ['array*', of=>'str*', min_len=>1],
             req    => 1,
             pos    => 0,
             greedy => 1,
@@ -25,7 +25,7 @@ $SPEC{pmuninst} = {
         },
     },
     deps => {
-        exec=>'cpanm',
+        prog => 'cpanm',
     },
 };
 sub pmuninst {
