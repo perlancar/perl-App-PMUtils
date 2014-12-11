@@ -17,22 +17,25 @@ $SPEC{pmuninst} = {
     summary => 'Uninstall an installed Perl module (using cpanm --uninstall)',
     args => {
         module => {
-            schema => 'str*',
+            schema => ['array*', of=>'str*'],
             req    => 1,
             pos    => 0,
-            completion => $App::PMUtils::_complete_module,
+            greedy => 1,
+            element_completion => $App::PMUtils::_complete_module,
         },
     },
-    result_naked=>1,
     deps => {
         exec=>'cpanm',
     },
 };
 sub pmuninst {
     my %args = @_;
-    my $mod = $args{module};
-    $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
-    exec "cpanm", "--uninstall", $mod;
+    my $mods = $args{module};
+    for my $mod (@$mods) {
+        $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
+        system "cpanm", "--uninstall", $mod;
+    }
+    [200, "OK"]; # XXX check/accumulate success status
 }
 
 Perinci::CmdLine::Any->new(
