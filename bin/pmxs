@@ -55,7 +55,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Check whether an installed Perl module is XS/pure-perl
-# PODNAME: pmxs
+# PODNAME:
 
 =head1 SYNOPSIS
 

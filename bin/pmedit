@@ -46,7 +46,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Launch editor for Perl module source code
-# PODNAME: pmedit
+# PODNAME:
 
 =head1 SYNOPSIS
 

@@ -45,7 +45,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Show manpage of Perl module
-# PODNAME: pmman
+# PODNAME:
 
 =head1 SYNOPSIS
 

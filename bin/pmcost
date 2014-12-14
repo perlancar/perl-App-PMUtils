@@ -71,7 +71,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Load Perl module with Devel::EndStats
-# PODNAME: pmcost
+# PODNAME:
 
 =head1 SYNOPSIS
 

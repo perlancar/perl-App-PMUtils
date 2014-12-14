@@ -70,7 +70,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Get Perl module version
-# PODNAME: pmversion
+# PODNAME:
 
 =head1 SYNOPSIS
 

@@ -63,7 +63,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Check if Perl module is in core
-# PODNAME: pmcore
+# PODNAME:
 
 =head1 SYNOPSIS
 

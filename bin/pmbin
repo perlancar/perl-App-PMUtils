@@ -111,7 +111,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Given an installed Perl module, list scripts that come with its distribution
-# PODNAME: pmbin
+# PODNAME:
 
 =head1 SYNOPSIS
 

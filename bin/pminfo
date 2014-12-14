@@ -72,7 +72,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Get Perl module information
-# PODNAME: pminfo
+# PODNAME:
 
 =head1 SYNOPSIS
 
