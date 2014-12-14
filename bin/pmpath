@@ -46,7 +46,6 @@ _
             cmdline_aliases => {d=>{}},
         },
     },
-    "cmdline.default_format" => 'text-simple',
 };
 sub pmpath {
     require Module::Path::More;

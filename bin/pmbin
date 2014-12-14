@@ -64,7 +64,6 @@ _
             cmdline_aliases => {P=>{}},
         },
     },
-    "cmdline.default_format" => 'text-simple',
 };
 sub pmbin {
     require Dist::Util;

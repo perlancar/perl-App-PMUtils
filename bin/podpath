@@ -31,7 +31,6 @@ $SPEC{podpath} = {
             cmdline_aliases => {P=>{}},
         },
     },
-    "cmdline.default_format" => 'text-simple',
 };
 sub podpath {
     require Module::Path::More;

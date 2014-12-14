@@ -23,7 +23,6 @@ $SPEC{pmxs} = {
             element_completion => $App::PMUtils::_complete_module,
         },
     },
-    "cmdline.default_format" => 'text-simple',
 };
 sub pmxs {
     require Module::XSOrPP;

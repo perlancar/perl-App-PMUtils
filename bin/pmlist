@@ -43,7 +43,6 @@ _
             cmdline_aliases => { recurse => {}, r => {} },
         },
     },
-    "cmdline.default_format" => 'text-simple',
 };
 sub pmlist {
     require Module::List;
