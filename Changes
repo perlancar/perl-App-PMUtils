@@ -1,5 +1,14 @@
 Revision history for App-PMUtils
 
+0.35    2014-12-16 (PERLANCAR)
+
+        - pmuninst: Accept multiple modules.
+
+        - [build] Rebuild with newer Pod::Weaver::Plugin::Rinci which can add
+          stuffs to scripts' POD from embedded Rinci metadata in the main
+          package.
+
+
 0.34    2014-12-08 (PERLANCAR)
 
 	- [ux] [experimental] Convenience in tab completion: change 'dzp'
