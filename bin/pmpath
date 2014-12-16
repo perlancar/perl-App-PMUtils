@@ -96,5 +96,6 @@ Basic usage:
 
 Find all modules (-a), return absolute paths (-P):
 
- % pmpath -a Some::Module
+ % pmpath -aP Some::Module Another::Mod
+
 
