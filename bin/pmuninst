@@ -49,7 +49,3 @@ Perinci::CmdLine::Any->new(
 
  % pmuninst App::Stopwatch
 
-See all other options:
-
- % pmuninst --help
-

@@ -121,7 +121,3 @@ Basic usage:
 Return full path instead of just names:
 
  % pmbin -P Some::Module
-
-See all other options:
-
- % pmbin --help

@@ -98,7 +98,3 @@ Find all modules (-a), return absolute paths (-P):
 
  % pmpath -a Some::Module
 
-See all other options:
-
- % pmpath --help
-

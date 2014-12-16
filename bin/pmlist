@@ -82,7 +82,3 @@ Basic usage:
 
  % pmlist Text::
 
-See all other options:
-
- % pmlist --help
-
