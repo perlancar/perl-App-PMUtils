@@ -23,10 +23,12 @@ $SPEC{pmpath} = {
             element_completion => $App::PMUtils::_complete_module,
         },
         all => {
+            summary => 'Return all found files for each module instead of the first one',
             schema => 'bool',
             cmdline_aliases => {a=>{}},
         },
         abs => {
+            summary => 'Absolutify each path',
             schema => 'bool',
             cmdline_aliases => {P=>{}},
         },
