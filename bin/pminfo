@@ -71,7 +71,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pminfo',
 )->run;
 
-# ABSTRACT: Get Perl module information
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

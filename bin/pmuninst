@@ -42,7 +42,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmuninst',
 )->run;
 
-# ABSTRACT: Uninstall an installed Perl module (using cpanm --uninstall)
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

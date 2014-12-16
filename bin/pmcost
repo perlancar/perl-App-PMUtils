@@ -70,7 +70,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmcost',
 )->run;
 
-# ABSTRACT: Load Perl module with Devel::EndStats
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

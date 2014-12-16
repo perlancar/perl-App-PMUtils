@@ -87,7 +87,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmpath',
 )->run;
 
-# ABSTRACT: Get path to locally installed Perl module
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

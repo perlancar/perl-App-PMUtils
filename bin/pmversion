@@ -68,7 +68,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmversion',
 )->run;
 
-# ABSTRACT: Get Perl module version
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

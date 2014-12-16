@@ -44,7 +44,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmman',
 )->run;
 
-# ABSTRACT: Show manpage of Perl module
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

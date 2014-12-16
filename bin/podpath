@@ -59,7 +59,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/podpath',
 )->run;
 
-# ABSTRACT: Get path to locally installed POD
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

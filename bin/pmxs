@@ -53,7 +53,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmxs',
 )->run;
 
-# ABSTRACT: Check whether an installed Perl module is XS/pure-perl
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

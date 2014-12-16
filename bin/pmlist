@@ -73,7 +73,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmlist',
 )->run;
 
-# ABSTRACT: List Perl modules (and PODs, and module prefixes)
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

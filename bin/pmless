@@ -44,7 +44,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pmless',
 )->run;
 
-# ABSTRACT: Show Perl module source code with `less`
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS
