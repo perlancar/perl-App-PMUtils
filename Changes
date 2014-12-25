@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.36    2014-12-25 (PERLANCAR) - ♪ feliz navidad
+
+        - No functional changes.
+
+        - Adjust to Complete::Module 0.06.
+
+
 0.35    2014-12-16 (PERLANCAR)
 
         - pmuninst: Accept multiple modules.

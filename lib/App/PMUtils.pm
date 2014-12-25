@@ -7,11 +7,20 @@ use warnings;
 # VERSION
 # DATE
 
-our $_complete_module = sub {
+sub _complete_stuff {
     require Complete::Module;
+
+    my $which = shift;
+
     my %args = @_;
 
     my $word = $args{word} // '';
+
+    # convenience (and compromise): if word doesn't contain :: we use the
+    # "safer" separator /, but if already contains '::' we use '::'. Using "::"
+    # in bash means user needs to use quote (' or ") to make completion behave
+    # as expected since : is by default a word break character in bash/readline.
+    my $sep = $word =~ /::/ ? '::' : '/';
 
     # convenience: shortcuts (should make this user-configurable in the future).
     # so if user types 'dzp' it will become 'Dist/Zilla/Plugin/', if she types
@@ -23,57 +32,38 @@ our $_complete_module = sub {
     };
     {
         my $tmp = lc $word;
-        my $sep;
-        $tmp =~ s!(/|::)\z!! and $sep = $1;
         if ($shortcuts->{$tmp}) {
             $word = $shortcuts->{$tmp};
-            if ($sep) { $word =~ s!/!$sep!g }
+            $word =~ s!/!$sep!g;
         }
     }
 
     # convenience: allow Foo/Bar.{pm,pod,pmc}
     $word =~ s/\.(pm|pmc|pod)\z//;
 
-    # compromise, if word doesn't contain :: we use the safer separator /, but
-    # if already contains '::' we use '::' (but this means in bash user needs to
-    # use quote (' or ") to make completion behave as expected since : is a word
-    # break character in bash/readline.
-    my $sep = $word =~ /::/ ? '::' : '/';
-    $word =~ s/\W+/::/g;
+    my $res;
+    {
+        my $word = $word;
+        $word =~ s/\Q$sep\E/::/g;
+        $res = Complete::Module::complete_module(
+            word      => $word,
+            find_pm   => $which eq 'pod' ? 0 : 1,
+            find_pmc  => $which eq 'pod' ? 0 : 1,
+            find_pod  => $which eq 'pod' ? 1 : 0,
+        );
+        for (@$res) {
+            s/::/$sep/g;
+        }
+    }
 
     {
-        words => Complete::Module::complete_module(
-            word      => $word,
-            find_pmc  => 0,
-            find_pod  => 0,
-            separator => $sep,
-            ci        => 1, # convenience
-        ),
-        path_sep   => $sep,
+        words => $res,
+        path_sep => $sep,
     };
 };
 
-our $_complete_pod = sub {
-    require Complete::Module;
-    my %args = @_;
-
-    my $word = $args{word} // '';
-
-    my $sep = $word =~ /::/ ? '::' : '/';
-    $word =~ s/\W+/::/g;
-
-    {
-        words => Complete::Module::complete_module(
-            word      => $word,
-            find_pm   => 0,
-            find_pmc  => 0,
-            find_pod  => 1,
-            separator => '/',
-            ci        => 1, # convenience
-        ),
-        path_sep   => $sep,
-    };
-};
+our $_complete_module = sub { _complete_stuff('module', @_) };
+our $_complete_pod    = sub { _complete_stuff('pod', @_) };
 
 1;
 # ABSTRACT: Command-line utilities related to Perl modules
