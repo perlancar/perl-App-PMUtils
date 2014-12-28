@@ -3,6 +3,8 @@ package App::PMUtils;
 # DATE
 # VERSION
 
+use 5.010001;
+
 1;
 # ABSTRACT: Command-line utilities related to Perl modules
 
