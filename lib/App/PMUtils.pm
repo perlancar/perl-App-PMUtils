@@ -1,69 +1,7 @@
 package App::PMUtils;
 
-use 5.010001;
-use strict;
-use warnings;
-
-# VERSION
 # DATE
-
-sub _complete_stuff {
-    require Complete::Module;
-
-    my $which = shift;
-
-    my %args = @_;
-
-    my $word = $args{word} // '';
-
-    # convenience (and compromise): if word doesn't contain :: we use the
-    # "safer" separator /, but if already contains '::' we use '::'. Using "::"
-    # in bash means user needs to use quote (' or ") to make completion behave
-    # as expected since : is by default a word break character in bash/readline.
-    my $sep = $word =~ /::/ ? '::' : '/';
-
-    # convenience: shortcuts (should make this user-configurable in the future).
-    # so if user types 'dzp' it will become 'Dist/Zilla/Plugin/', if she types
-    # 'dzp::' then it will become 'Dist::Zilla::Plugin::'
-    state $shortcuts = {
-        dzp => 'Dist/Zilla/Plugin/',
-        pwp => 'Pod/Weaver/Plugin/',
-        pws => 'Pod/Weaver/Section/',
-    };
-    {
-        my $tmp = lc $word;
-        if ($shortcuts->{$tmp}) {
-            $word = $shortcuts->{$tmp};
-            $word =~ s!/!$sep!g;
-        }
-    }
-
-    # convenience: allow Foo/Bar.{pm,pod,pmc}
-    $word =~ s/\.(pm|pmc|pod)\z//;
-
-    my $res;
-    {
-        my $word = $word;
-        $word =~ s/\Q$sep\E/::/g;
-        $res = Complete::Module::complete_module(
-            word      => $word,
-            find_pm   => $which eq 'pod' ? 0 : 1,
-            find_pmc  => $which eq 'pod' ? 0 : 1,
-            find_pod  => $which eq 'pod' ? 1 : 0,
-        );
-        for (@$res) {
-            s/::/$sep/g;
-        }
-    }
-
-    {
-        words => $res,
-        path_sep => $sep,
-    };
-};
-
-our $_complete_module = sub { _complete_stuff('module', @_) };
-our $_complete_pod    = sub { _complete_stuff('pod', @_) };
+# VERSION
 
 1;
 # ABSTRACT: Command-line utilities related to Perl modules

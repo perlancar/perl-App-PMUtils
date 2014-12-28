@@ -1,15 +1,14 @@
 #!perl
 
+# DATE
+# VERSION
+
 use 5.010;
 use strict;
 use warnings;
 use Log::Any '$log';
 
-use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
-
-# DATE
-# VERSION
 
 our %SPEC;
 $SPEC{pmcost} = {
@@ -26,7 +25,11 @@ _
             req    => 1,
             pos    => 0,
             greedy => 1,
-            element_completion => $App::PMUtils::_complete_module,
+            element_completion => sub {
+                require Complete::Module;
+                my %args = @_;
+                Complete::Module::complete_module(word=>$args{word});
+            },
         },
         hide_core => {
             schema => 'bool',

@@ -1,14 +1,13 @@
 #!perl
 
+# DATE
+# VERSION
+
 use 5.010;
 use strict;
 use warnings;
 
-use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
-
-# DATE
-# VERSION
 
 our %SPEC;
 $SPEC{pmdoc} = {
@@ -25,7 +24,11 @@ _
             schema => 'str*',
             req => 1,
             pos => 0,
-            completion => $App::PMUtils::_complete_module,
+            completion => sub {
+                require Complete::Module;
+                my %args = @_;
+                Complete::Module::complete_module(word=>$args{word});
+            },
         },
     },
     deps => {
