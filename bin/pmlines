@@ -1,0 +1,76 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any '$log';
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+our %SPEC;
+$SPEC{pmlines} = {
+    v => 1.1,
+    summary => 'Count number of {code,POD} lines in a Perl module',
+    description => <<'_',
+
+
+
+_
+    args => {
+        module => $App::PMUtils::arg_module_multiple,
+    },
+    result_naked => 1,
+};
+sub pmlines {
+    require SourceCode::LineCounter::Perl;
+
+    my %args = @_;
+    my $mods = $args{module};
+
+    require Module::Load;
+    require Module::Path::More;
+
+    my $res = [];
+    for my $mod (@$mods) {
+        $mod =~ s!/!::!g;
+        my $rec = {module=>$mod};
+        push @$res, $rec;
+        my $path = Module::Path::More::module_path(module=>$mod);
+        next unless $path;
+
+        my $counter = SourceCode::LineCounter::Perl->new;
+        $counter->count($path);
+        $rec->{total}   = $counter->total;
+        $rec->{code}    = $counter->code;
+        $rec->{pod}     = $counter->documentation;
+        $rec->{blank}   = $counter->blank;
+        $rec->{comment} = $counter->comment;
+    };
+
+    $res;
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmlines',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ % pmlines HTTP::Tiny LWP::UserAgent
+ +-------+------+---------+----------------+-----+-------+
+ | blank | code | comment | module         | pod | total |
+ | 482   | 988  | 276     | HTTP::Tiny     | 686 | 2136  |
+ | 417   | 844  | 68      | LWP::UserAgent | 807 | 1861  |
+ +-------+------+---------+----------------+-----+-------+
+
+
+=head1 SEE ALSO
+
+L<pllines> (from L<App::PlUtils> distribution)
