@@ -7,6 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -14,17 +15,7 @@ $SPEC{pmpath} = {
     v => 1.1,
     summary => 'Get path to locally installed Perl module',
     args => {
-        module => {
-            schema => ['array*', of=>'str*', min_len=>1],
-            req    => 1,
-            pos    => 0,
-            greedy => 1,
-            element_completion => sub {
-                require Complete::Module;
-                my %args = @_;
-                Complete::Module::complete_module(word=>$args{word});
-            },
-        },
+        module => $App::PMUtils::arg_module_multiple,
         all => {
             summary => 'Return all found files for each module instead of the first one',
             schema => 'bool',
@@ -102,5 +93,3 @@ Basic usage:
 Find all modules (-a), return absolute paths (-P):
 
  % pmpath -aP Some::Module Another::Mod
-
-

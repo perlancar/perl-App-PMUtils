@@ -7,6 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -19,16 +20,7 @@ This function is essentially `man MODNAME`, but offers command-line completion.
 
 _
     args => {
-        module => {
-            schema => 'str*',
-            req => 1,
-            pos => 0,
-            completion => sub {
-                require Complete::Module;
-                my %args = @_;
-                Complete::Module::complete_module(word=>$args{word});
-            },
-        },
+        module => $App::PMUtils::arg_module_single,
     },
     deps => {
         prog => 'man',
@@ -55,4 +47,3 @@ Perinci::CmdLine::Any->new(
 Basic usage:
 
  % pmman Some::Module
-

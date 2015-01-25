@@ -7,6 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -14,18 +15,7 @@ $SPEC{podpath} = {
     v => 1.1,
     summary => 'Get path to locally installed POD',
     args => {
-        pod => {
-            schema => ['array*', of=>'str*', min_len=>1],
-            req    => 1,
-            pos    => 0,
-            greedy => 1,
-            element_completion => sub {
-                require Complete::Module;
-                my %args = @_;
-                Complete::Module::complete_module(
-                    word=>$args{word}, find_pm=>0, find_pmc=>0, find_pod=>1);
-            },
-        },
+        pod => $App::PMUtils::arg_module_multiple,
         all => {
             schema => 'bool',
             cmdline_aliases => {a=>{}},
@@ -71,4 +61,3 @@ Perinci::CmdLine::Any->new(
 Basic usage:
 
  % podpath PSGI
-

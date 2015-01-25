@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
+use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -17,17 +18,7 @@ $SPEC{pmversion} = {
     description => <<'_',
 _
     args => {
-        module => {
-            schema => ['array*' => of => 'str*', min_len=>1],
-            req => 1,
-            pos => 0,
-            greedy => 1,
-            element_completion => sub {
-                require Complete::Module;
-                my %args = @_;
-                Complete::Module::complete_module(word=>$args{word});
-            },
-        },
+        module => $App::PMUtils::arg_module_multiple,
     },
 };
 sub pmversion {
@@ -82,4 +73,3 @@ Perinci::CmdLine::Any->new(
 =head1 SEE ALSO
 
 L<pminfo>
-

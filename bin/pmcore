@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
+use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -20,16 +21,7 @@ $SPEC{pmcore} = {
 
 _
     args => {
-        module => {
-            schema => 'str*',
-            req    => 1,
-            pos    => 0,
-            completion => sub {
-                require Complete::Module;
-                my %args = @_;
-                Complete::Module::complete_module(word=>$args{word});
-            },
-        },
+        module => $App::PMUtils::arg_module_single,
         modver => {
             schema => 'str*',
             pos    => 1,
@@ -75,4 +67,3 @@ Perinci::CmdLine::Any->new(
 
  % pmcore Foo
  Foo was not in CORE (or so I think)
-

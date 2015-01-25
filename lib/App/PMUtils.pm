@@ -5,6 +5,29 @@ package App::PMUtils;
 
 use 5.010001;
 
+our $arg_module_multiple = {
+    schema => ['array*' => of=>'str*', min_len=>1],
+    req    => 1,
+    pos    => 0,
+    greedy => 1,
+    element_completion => sub {
+        require Complete::Module;
+        my %args = @_;
+        Complete::Module::complete_module(word=>$args{word});
+    },
+};
+
+our $arg_module_single = {
+    schema => 'str*',
+    req    => 1,
+    pos    => 0,
+    completion => sub {
+        require Complete::Module;
+        my %args = @_;
+        Complete::Module::complete_module(word=>$args{word});
+    },
+};
+
 1;
 # ABSTRACT: Command-line utilities related to Perl modules
 
