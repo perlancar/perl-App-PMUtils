@@ -9,7 +9,7 @@ use warnings;
 use Log::Any '$log';
 
 use App::PMUtils;
-use Perinci::CmdLine::Any -prefer_lite=>1;
+use Perinci::CmdLine::Any;
 
 our %SPEC;
 $SPEC{pmversion} = {
