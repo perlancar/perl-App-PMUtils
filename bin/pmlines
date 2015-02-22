@@ -71,6 +71,16 @@ Perinci::CmdLine::Any->new(
  +-------+------+---------+----------------+-----+-------+
 
 
+=head1 DESCRIPTION
+
+This utility uses L<SourceCode::LineCounter::Perl> to count lines of
+{code,POD,blank,comment} in a specified module.
+
+
 =head1 SEE ALSO
+
+L<App::cloc> which uses the B<cloc> program and can output number of
+{code,blank,comment} lines in a Perl source code (as well as other languages).
+Results might differ slightly with result from this utility.
 
 L<pllines> (from L<App::PlUtils> distribution)
