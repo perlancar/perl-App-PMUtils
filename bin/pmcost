@@ -36,6 +36,10 @@ _
             schema => 'bool',
         },
     },
+    examples => [
+        {test=>0, src="pmcost Perinci::CmdLine", src_plang=>"bash"},
+        {test=>0, src="pmcost if=1,Perinci::CmdLine", src_plang=>"bash"},
+    ],
 };
 sub pmcost {
     my %args = @_;
