@@ -1,5 +1,14 @@
 Revision history for App-PMUtils
 
+0.40    2015-03-21 (PERLANCAR)
+
+	- No functional changes.
+
+        - [Documentation] Add examples for pmcost, mention
+          SourceCode::LineCounter::Perl and cloc in pmlines, add a complete list
+          of similar distributions in See Also.
+
+
 0.39    2015-01-25 (PERLANCAR)
 
 	- Add utility: pmlines.
