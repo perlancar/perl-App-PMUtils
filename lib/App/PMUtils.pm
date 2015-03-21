@@ -36,6 +36,8 @@ our $arg_module_single = {
 This distribution provides the following command-line utilities related to Perl
 modules:
 
+#INSERT_EXECS_LIST
+
 The main purpose of these utilities is tab completion.
 
 
