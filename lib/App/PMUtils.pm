@@ -74,15 +74,11 @@ L<App::IODUtils>, utilities related to L<IOD> configuration files.
 
 L<App::LedgerUtils>, utilities related to Ledger CLI files.
 
-L<App::OrgUtils>, utilities related to Org files.
-
 L<App::PlUtils>, utilities related to Perl scripts.
 
 L<App::PMUtils>, utilities related to Perl modules.
 
 L<App::ProgUtils>, utilities related to programs.
-
-L<App::UpfUtils>, utilities related to Unix password/shadow files.
 
 L<App::WeaverUtils>, utilities related to L<Pod::Weaver>.
 
