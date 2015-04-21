@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.41    2015-04-21 (PERLANCAR)
+
+	- pmxs: Adjust to Module::XSOrPP 0.08.
+
+	- [doc] Remove some dists which not really belong in See Also.
+
+
 0.40    2015-03-21 (PERLANCAR)
 
 	- No functional changes.
