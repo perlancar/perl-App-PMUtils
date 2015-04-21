@@ -28,13 +28,13 @@ sub pmxs {
     my $found;
 
     for my $mod (@{$mods}) {
-        my $is_xs = Module::XSOrPP::is_xs($mod);
-        $found++ if defined($is_xs);
-        my $f_is_xs = $is_xs ? "XS" : defined($is_xs) ? "PP" : "?";
+        my $fres = Module::XSOrPP::xs_or_pp($mod);
+        $found++ if defined $fres;
+        $fres = uc($fres // '?');
         push @$res, @$mods > 1 ? {
             module=>$mod,
-            xs=>$f_is_xs,
-        } : $f_is_xs;
+            xs=>$fres,
+        } : $fres;
     }
 
     if ($found) {
