@@ -9,6 +9,10 @@ use warnings;
 use Log::Any '$log';
 
 use App::PMUtils;
+use File::Which;
+use IO::Prompt::I18N qw(confirm);
+use Module::Path::More qw(module_path);
+use IPC::System::Options qw(backtick);
 use Perinci::CmdLine::Any;
 
 our %SPEC;
@@ -17,14 +21,52 @@ $SPEC{pmuninst} = {
     summary => 'Uninstall an installed Perl module (using cpanm --uninstall)',
     args => {
         module => $App::PMUtils::arg_module_multiple,
+        uninstall_rdeps => {
+            schema => 'bool',
+            summary => 'Also uninstall dists which depends on the module(s) being uninstalled',
+            cmdline_aliases => {R=>{}},
+        },
+        confirm_yes => {
+            schema => ['bool', is=>1],
+            cmdline_aliases => {y=>{}},
+        },
     },
     deps => {
         prog => 'cpanm',
     },
 };
 sub pmuninst {
+    use experimental 'smartmatch';
+
     my %args = @_;
     my $mods = $args{module};
+
+    if ($args{uninstall_rdeps}) {
+        return [412, "lcpan is required to find reverse deps"]
+            unless which("lcpan");
+        require JSON;
+        my $res = backtick(
+            {log=>1, die=>1},
+            "lcpan", "rdeps", "--phase", "ALL", "--rel", "requires", "--json",
+            "-l", 2, # limit to this level for now, for speed
+            "--no-naked-res",
+            @$mods
+        );
+        $res = JSON->new->decode($res);
+        my @rmods;
+        for (@{ $res->[2] }) {
+            my $mod = $_->{dist}; $mod =~ s/^\s+//; $mod =~ s/-/::/g;
+            next unless module_path(module=>$mod);
+            push @rmods, $mod unless $mod ~~ @$mods;
+        }
+        if (@rmods && !$args{confirm_yes}) {
+            return [200, "Cancelled"] unless
+                confirm("These modules will also be uninstalled: ".
+                        join(", ", @rmods) . ", are you sure?");
+        }
+        push @$mods, @rmods;
+    }
+
     for my $mod (@$mods) {
         $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
         system "cpanm", "--uninstall", $mod;
