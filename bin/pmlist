@@ -29,18 +29,22 @@ _
                 my %args = @_;
                 Complete::Module::complete_module(word=>$args{word});
             },
+            tags => ['category:filtering'],
         },
         pm => {
             schema  => 'bool',
             default => 1,
+            tags => ['category:filtering'],
         },
         pod => {
             schema  => 'bool',
-            default => 1,
+            default => 0,
+            tags => ['category:filtering'],
         },
         prefix => {
             schema  => 'bool',
-            default => 1,
+            default => 0,
+            tags => ['category:filtering'],
         },
         recursive => {
             schema  => 'bool',
@@ -61,9 +65,9 @@ sub pmlist {
     my $mods = Module::List::list_modules(
         $query,
         {
-            list_prefixes => $args{prefix} // 1,
-            list_modules  => $args{pm} // 1,
-            list_pod      => $args{pod} // 1,
+            list_prefixes => $args{prefix},
+            list_modules  => $args{pm},
+            list_pod      => $args{pod},
             recurse       => $args{recursive},
         });
     my @res;
