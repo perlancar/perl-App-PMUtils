@@ -32,29 +32,58 @@ _
             tags => ['category:filtering'],
         },
         pm => {
+            summary => 'List .pm files',
             schema  => 'bool',
             default => 1,
             tags => ['category:filtering'],
         },
         pod => {
+            summary => 'List .pod files',
             schema  => 'bool',
             default => 0,
             tags => ['category:filtering'],
         },
         prefix => {
+            summary => 'List prefixes (dirs)',
             schema  => 'bool',
             default => 0,
             tags => ['category:filtering'],
         },
-        recursive => {
+        xs => {
+            summary => 'Only list XS modules',
+            'summary.alt.bool.neg' => 'Only list PP (pure-perl) modules',
             schema  => 'bool',
-            cmdline_aliases => { recurse => {}, r => {} },
+            tags => ['category:filtering'],
+            cmdline_aliases => {
+                pp => {
+                    summary => 'Alias for --no-core',
+                    is_flag => 1,
+                    code => sub { $_[0]{xs} = 0 },
+                },
+            },
+        },
+        core => {
+            summary => 'Only list core modules',
+            'summary.alt.bool.neg' => 'Only list non-core modules',
+            schema  => 'bool',
+            tags => ['category:filtering'],
+        },
+        recurse => {
+            schema  => 'bool',
+            cmdline_aliases => { R => {} },
+        },
+        detail => {
+            summary => 'Return detailed records instead of just module names',
+            schema  => 'bool',
         },
     },
 };
 sub pmlist {
     require Module::List;
     my %args = @_;
+
+    require Module::CoreList::More if defined($args{core}) || $args{detail};
+    require Module::XSOrPP if defined($args{xs}) || $args{detail};
 
     my $query = $args{query} // "";
     $query =~ s!/!::!g; # convenience
@@ -68,13 +97,41 @@ sub pmlist {
             list_prefixes => $args{prefix},
             list_modules  => $args{pm},
             list_pod      => $args{pod},
-            recurse       => $args{recursive},
+            recurse       => $args{recurse},
         });
     my @res;
-    for (sort keys %$mods) {
-        push @res, $_;
+  MOD:
+    for my $mod (sort keys %$mods) {
+        my $is_core;
+        if (defined $args{core}) {
+            $is_core = Module::CoreList::More->is_core($mod);
+            next MOD if $args{core} xor $is_core;
+        }
+        my $is_xs;
+        my $is_xs_calculated;
+        if (defined $args{xs}) {
+            $is_xs = Module::XSOrPP::is_xs($mod);
+            $is_xs_calculated++;
+            next MOD if $args{xs} xor $is_xs;
+        }
+
+        if ($args{detail}) {
+            push @res, {
+                module  => $mod,
+                is_core => $is_core // Module::CoreList::More->is_core($mod),
+                is_xs   => $is_xs_calculated ? $is_xs : Module::XSOrPP::is_xs($mod),
+            };
+        } else {
+            push @res, $mod;
+        }
     }
-    [200, "OK", \@res];
+    my $meta = {};
+    if ($args{detail}) {
+        $meta->{format_options}{any}{table_column_orders} = [
+            [qw/module is_core is_xs/],
+        ];
+    }
+    [200, "OK", \@res, $meta];
 }
 
 Perinci::CmdLine::Any->new(
