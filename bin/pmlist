@@ -75,6 +75,7 @@ _
         detail => {
             summary => 'Return detailed records instead of just module names',
             schema  => 'bool',
+            cmdline_aliases => { l=>{} },
         },
     },
 };
