@@ -1,5 +1,22 @@
 Revision history for App-PMUtils
 
+0.43    2015-04-22 (PERLANCAR)
+
+        - No functional changes.
+
+        - Re-upload.
+
+
+0.42    2015-04-22 (PERLANCAR)
+
+        - pmlist: Change default for --pod & --prefix (listing modules is the
+          common use-case, not including POD and prefix), add --core & --xs
+          filters, add --detail (-l), change -r to -R.
+
+        - pmuninst: Add option --uninstall-rdeps (-R) & --confirm-yes (-y),
+          currently limited to 2-level.
+
+
 0.41    2015-04-21 (PERLANCAR)
 
 	- pmxs: Adjust to Module::XSOrPP 0.08.
