@@ -26,6 +26,22 @@ $SPEC{pmpath} = {
             schema => 'bool',
             cmdline_aliases => {P=>{}},
         },
+        pm => {
+            schema => 'bool',
+            default => 1,
+        },
+        pmc => {
+            schema => 'bool',
+            default => 0,
+        },
+        pod => {
+            schema => 'bool',
+            default => 0,
+        },
+        prefix => {
+            schema => 'bool',
+            default => 0,
+        },
         dir => {
             summary => 'Show directory instead of path',
             description => <<'_',
@@ -53,8 +69,14 @@ sub pmpath {
 
     for my $mod (@{$mods}) {
         my $mpath = Module::Path::More::module_path(
-            module=>$mod, find_pmc=>0, find_pod=>0, find_prefix=>1,
-            abs=>$args{abs}, all=>$args{all});
+            module      => $mod,
+            find_pm     => $args{pm},
+            find_pmc    => $args{pmc},
+            find_pod    => $args{pod},
+            find_prefix => $args{prefix},
+            abs         => $args{abs},
+            all         => $args{all},
+        );
         $found++ if $mpath;
         for (ref($mpath) eq 'ARRAY' ? @$mpath : ($mpath)) {
             if ($args{dir}) {
