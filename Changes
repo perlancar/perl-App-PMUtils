@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.44    2015-06-11 (PERLANCAR)
+
+	- pmpath: Add --pod, --nopm, --prefix, --pmc; change default of
+	  prefix searching to 0.
+
+
 0.43    2015-04-22 (PERLANCAR)
 
         - No functional changes.
