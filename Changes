@@ -1,5 +1,10 @@
 Revision history for App-PMUtils
 
+0.45    2015-06-17 (PERLANCAR)
+
+        - Add utilities: pmcat, pmstripper.
+
+
 0.44    2015-06-11 (PERLANCAR)
 
 	- pmpath: Add --pod, --nopm, --prefix, --pmc; change default of
