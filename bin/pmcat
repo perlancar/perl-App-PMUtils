@@ -1,0 +1,70 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{pmcat} = {
+    v => 1.1,
+    summary => 'Print Perl module source codes',
+    args => {
+        module => $App::PMUtils::arg_module_multiple,
+    },
+};
+sub pmcat {
+    require Module::Load;
+    require Module::Path::More;
+
+    my %args = @_;
+    my $mods = $args{module};
+    return [400, "Please specify at least one module"] unless @$mods;
+
+    my $has_success;
+    my $has_error;
+    for my $mod (@$mods) {
+        $mod =~ s!/!::!g;
+        my $path = Module::Path::More::module_path(module=>$mod) or do {
+            warn "pmcat: No such module '$mod'";
+            $has_error++;
+            next;
+        };
+        open my $fh, "<", $path or do {
+            warn "pmcat: Can't open '$path': $!\n";
+            $has_error++;
+            next;
+        };
+        print while <$fh>;
+        close $fh;
+        $has_success++;
+    }
+
+    if ($has_error) {
+        if ($has_success) {
+            return [207, "Some modules failed"];
+        } else {
+            return [500, "All modules failed"];
+        }
+    } else {
+        return [200, "All modules OK"];
+    }
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmcat',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % pmcat Some::Module Another::Module
