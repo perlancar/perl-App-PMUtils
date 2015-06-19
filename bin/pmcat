@@ -19,7 +19,6 @@ $SPEC{pmcat} = {
     },
 };
 sub pmcat {
-    require Module::Load;
     require Module::Path::More;
 
     my %args = @_;
