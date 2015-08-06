@@ -68,6 +68,23 @@ _
             schema  => 'bool',
             tags => ['category:filtering'],
         },
+        core_dirs => {
+            summary => 'Only search in core directories',
+            'summary.alt.bool.neg' => 'Only search in non-core directories',
+            schema => 'bool',
+            tags => ['category:filtering'],
+        },
+        exclude_curdir => {
+            summary => 'Do not include "." in search dir',
+            schema => 'bool',
+            description => <<'_',
+
+By default, Perl usually adds `.` (the current directory) in the search dir.
+This option removes it.
+
+_
+            tags => ['category:filtering'],
+        },
         recurse => {
             schema  => 'bool',
             cmdline_aliases => { R => {} },
@@ -91,6 +108,14 @@ sub pmlist {
 
     # i wonder why Module::List is not more forgiving
     $query .= "::" unless !length($query) || $query =~ /::\z/;
+
+    local @INC = @INC;
+    @INC = do {
+        no warnings 'once';
+        require Config;
+        @Config::Config{qw(privlibexp archlibexp)};
+    } if $args{core_dirs};
+    @INC = grep { $_ ne '.' } @INC if $args{exclude_curdir};
 
     my $mods = Module::List::list_modules(
         $query,
