@@ -1,5 +1,10 @@
 Revision history for App-PMUtils
 
+0.47    2015-08-06 (PERLANCAR)
+
+	- pmlist: Add options --core-dirs & --exclude-curdir.
+
+
 0.46    2015-07-01 (PERLANCAR)
 
 	- Add utility: pmchkver.
