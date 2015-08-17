@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.48    2015-08-17 (PERLANCAR)
+
+	- No functional changes.
+
+	- Switch from Log::Any to Log::Any::IfLOG.
+
+
 0.47    2015-08-06 (PERLANCAR)
 
 	- pmlist: Add options --core-dirs & --exclude-curdir.
