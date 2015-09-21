@@ -52,6 +52,7 @@ sub pmchkver {
 
     my @recs;
     for my $mod (@{$mods}) {
+        #say "D:Checking $mod ...";
         my $rec = {
             module => $mod,
             cpan_version => undef,
@@ -109,7 +110,7 @@ sub pmchkver {
         push @recs, $rec;
     }
 
-    [200, "OK", $args{detail} ? \@recs : [map {$_->{name}} @recs],
+    [200, "OK", $args{detail} ? \@recs : [map {$_->{latest}} @recs],
      {format_options=>{any=>{table_column_orders=>[[qw/module local_version cpan_version installed on_cpan latest/]]}}}];
 }
 
