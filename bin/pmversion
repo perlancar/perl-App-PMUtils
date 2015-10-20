@@ -9,6 +9,7 @@ use warnings;
 use Log::Any::IfLOG '$log';
 
 use App::PMUtils;
+use ExtUtils::MakeMaker;
 use Perinci::CmdLine::Any;
 
 our %SPEC;
@@ -19,14 +20,28 @@ $SPEC{pmversion} = {
 _
     args => {
         module => $App::PMUtils::arg_module_multiple,
+        method => {
+            schema => ['str*', in=>[qw/load mm/]],
+            default => 'mm',
+            description => <<'_',
+
+`load` means to load the module and read the package variable `$VERSION`. This
+means you have to actually execute the module's source code.
+
+`mm` means using `ExtUtils::MakeMaker`'s `MM->parse_version`. This uses simple
+regex over the module's source code and does not require you to actually execute
+the source code.
+
+_
+        },
     },
 };
 sub pmversion {
-    require Module::Load;
     require Module::Path::More;
 
     my %args = @_;
     my $mods = $args{module};
+    my $meth = $args{method} // 'mm';
 
     my $found;
     my $res = [];
@@ -38,16 +53,22 @@ sub pmversion {
             next;
         }
         $found++;
-        # load to get $VERSION & $DATE
-        {
+
+        my $v;
+        if ($meth eq 'load') {
+            require Module::Load;
             no strict 'refs';
             Module::Load::load($mod);
-            my $v = ${"$mod\::VERSION"};
-            if (defined $v) {
-                push @$res, (@$mods > 1 ? "$mod $v" : $v);
-            } else {
-                push @$res, "Module $mod does not define \$VERSION";
-            }
+            $v = ${"$mod\::VERSION"};
+        } else {
+            $v = MM->parse_version($mpath);
+            $v = undef if defined($v) && $v eq 'undef';
+        }
+
+        if (defined $v) {
+            push @$res, (@$mods > 1 ? "$mod $v" : $v);
+        } else {
+            push @$res, "Module $mod does not define \$VERSION";
         }
     }
 
