@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.51    2015-10-20 (PERLANCAR)
+
+	- pmversion: Add --method, switch default method from load to mm
+	  (using ExtUtils::MM).
+
+
 0.50    2015-09-22 (PERLANCAR)
 
 	- [doc] pmchkver: Add more description and mention
