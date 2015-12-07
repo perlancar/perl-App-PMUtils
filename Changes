@@ -1,5 +1,10 @@
 Revision history for App-PMUtils
 
+0.53    2015-12-07 (PERLANCAR)
+
+	- pmcore: Add option --perlver.
+
+
 0.52    2015-11-07 (PERLANCAR)
 
 	- No functional changes.
