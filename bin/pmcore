@@ -27,8 +27,11 @@ _
             pos    => 1,
             # XXX complete using Module::Corelist
         },
+        perlver => {
+            schema => 'str*',
+            'x.schema.entity' => 'perl_version',
+        },
     },
-    result_naked=>1,
 };
 sub pmcore {
     require Module::CoreList;
@@ -36,20 +39,43 @@ sub pmcore {
     my %args = @_;
     my $mod = $args{module};
     $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
-    my $ver = $args{modver};
+    my $modver = $args{modver};
+    my $perlver = $args{perlver};
+
+    my $modv = "$mod".($modver ? " version $modver" : "");
 
     my $ans;
-    if ($ver) {
-        $ans = Module::CoreList->first_release($mod, $ver);
+    if ($perlver) {
+        $ans = Module::CoreList->is_core($mod, $modver,
+                                         version->parse($perlver));
+        if ($ans) {
+            return [200, "OK", 1, {
+                "cmdline.result"=>"$modv was in core perl $perlver",
+                "cmdline.exit_code" => 0,
+            }];
+        } else {
+            return [200, "OK", 0, {
+                "cmdline.result"=>"$modv was NOT in core perl $perlver",
+                "cmdline.exit_code" => 1,
+            }];
+        }
     } else {
-        $ans = Module::CoreList->first_release($mod);
-    }
-    my $modv = "$mod".($ver ? " version $ver" : "");
-
-    if ($ans) {
-        return "$modv was first released with perl $ans";
-    } else {
-        return "$modv was not in CORE (or so I think)";
+        if ($modver) {
+            $ans = Module::CoreList->first_release($mod, $modver);
+        } else {
+            $ans = Module::CoreList->first_release($mod);
+        }
+        if ($ans) {
+            return [200, "OK", 1, {
+                "cmdline.result"=>"$modv was first released with perl $ans",
+                "cmdline.exit_code" => 0,
+            }];
+        } else {
+            return [200, "OK", 1, {
+                "cmdline.result"=>"$modv was not in CORE (or so I think)",
+                "cmdline.exit_code" => 1,
+            }];
+        }
     }
 }
 
