@@ -11,99 +11,12 @@ use App::PMUtils;
 use Perinci::CmdLine::Any;
 
 our %SPEC;
-$SPEC{pmpath} = {
-    v => 1.1,
-    summary => 'Get path to locally installed Perl module',
-    args => {
-        module => $App::PMUtils::arg_module_multiple,
-        all => {
-            summary => 'Return all found files for each module instead of the first one',
-            schema => 'bool',
-            cmdline_aliases => {a=>{}},
-        },
-        abs => {
-            summary => 'Absolutify each path',
-            schema => 'bool',
-            cmdline_aliases => {P=>{}},
-        },
-        pm => {
-            schema => 'bool',
-            default => 1,
-        },
-        pmc => {
-            schema => 'bool',
-            default => 0,
-        },
-        pod => {
-            schema => 'bool',
-            default => 0,
-        },
-        prefix => {
-            schema => 'bool',
-            default => 0,
-        },
-        dir => {
-            summary => 'Show directory instead of path',
-            description => <<'_',
-
-Also, will return `.` if not found, so you can conveniently do this on a Unix
-shell:
-
-    % cd `pmpath -Pd Moose`
-
-and it won't change directory if the module doesn't exist.
-
-_
-            schema  => ['bool', is=>1],
-            cmdline_aliases => {d=>{}},
-        },
-    },
-};
-sub pmpath {
-    require Module::Path::More;
-    my %args = @_;
-
-    my $mods = $args{module};
-    my $res = [];
-    my $found;
-
-    for my $mod (@{$mods}) {
-        my $mpath = Module::Path::More::module_path(
-            module      => $mod,
-            find_pm     => $args{pm},
-            find_pmc    => $args{pmc},
-            find_pod    => $args{pod},
-            find_prefix => $args{prefix},
-            abs         => $args{abs},
-            all         => $args{all},
-        );
-        $found++ if $mpath;
-        for (ref($mpath) eq 'ARRAY' ? @$mpath : ($mpath)) {
-            if ($args{dir}) {
-                require File::Spec;
-                my ($vol, $dir, $file) = File::Spec->splitpath($_);
-                $_ = $dir;
-            }
-            push @$res, @$mods > 1 ? {module=>$mod, path=>$_} : $_;
-        }
-    }
-
-    if ($found) {
-        [200, "OK", $res];
-    } else {
-        if ($args{dir}) {
-            [200, "OK (not found)", "."];
-        } else {
-            [404, "No such module"];
-        }
-    }
-}
 
 Perinci::CmdLine::Any->new(
-    url => '/main/pmpath',
+    url => '/App/PMUtils/pmpath',
 )->run;
 
-# ABSTRACT:
+# ABSTRACT: Get path to locally installed Perl module
 # PODNAME:
 
 =head1 SYNOPSIS
@@ -115,3 +28,10 @@ Basic usage:
 Find all modules (-a), return absolute paths (-P):
 
  % pmpath -aP Some::Module Another::Mod
+
+# INSERT_BLOCK: bin/pmdir protip_cdpm
+
+
+=head1 SEE ALSO
+
+L<pmdir>

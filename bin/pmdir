@@ -1,0 +1,59 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+
+Perinci::CmdLine::Any->new(
+    url => '/App/PMUtils/pmdir',
+)->run;
+
+# ABSTRACT: Get directory of locally installed Perl module/prefix
+# PODNAME:
+
+=head1 SYNOPSIS
+
+This is basically a shortcut for:
+
+ % pmpath -Pd MODULE_OR_PREFIX_NAME
+
+It's just that sometimes I forgot that L<pmpath> has a C<-d> option, and
+often intuitively look for a C<pmdir> command.
+
+Basic usage:
+
+ % cd `pmdir Pod::Weaver`
+
+Works with prefix too:
+
+ % cd `pmdir Dist::Zilla::Plugin`
+ % cd `pmdir Dist::Zilla::Plugin::`
+
+=for BEGIN_BLOCK: protip_cdpm
+
+Pro-tip: install this bash function to be able to cd quickly to directory of
+Perl module/prefix (tab completion is also provided):
+
+# EXAMPLE: share/cdpm.bash
+
+Afterwards, you can:
+
+ % cdpm di/zi/pl<tab>
+ % cdpm Dist/Zilla/Plugin/ _
+
+=for END_BLOCK: protip_cdpm
+
+
+=head1 DESCRIPTION
+
+=head1 SEE ALSO
+
+L<pmpath>
