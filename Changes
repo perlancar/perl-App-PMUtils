@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.54    2016-01-09 (PERLANCAR)
+
+	- Add script: pmdir, add pro-tip about cdpm shell function.
+
+	- Bump prereq version Log::Any::IfLOG to 0.07.
+
+
 0.53    2015-12-07 (PERLANCAR)
 
 	- pmcore: Add option --perlver.
