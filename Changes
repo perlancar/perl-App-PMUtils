@@ -1,5 +1,12 @@
 Revision history for App-PMUtils
 
+0.55    2016-01-18 (PERLANCAR)
+
+        - No functional changes.
+
+        - [build] Rebuild to fix POD section ordering.
+
+
 0.54    2016-01-09 (PERLANCAR)
 
 	- Add script: pmdir, add pro-tip about cdpm shell function.
