@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.56    2016-01-19 (PERLANCAR)
+
+	- pmbin: Tweak abstract so it's more consistent in style with
+	  others.
+
+
 0.55    2016-01-18 (PERLANCAR)
 
         - No functional changes.
