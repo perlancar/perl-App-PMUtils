@@ -13,8 +13,8 @@ use Perinci::CmdLine::Any;
 our %SPEC;
 $SPEC{pmbin} = {
     v => 1.1,
-    summary => 'Given an installed Perl module, list scripts that '.
-        'come with its distribution',
+    summary => 'List scripts that come with the same distribution '.
+        'of a Perl module',
     description => <<'_',
 
 Does this happen often with you: you install a CPAN module:
