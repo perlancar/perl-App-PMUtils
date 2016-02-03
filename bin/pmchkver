@@ -111,7 +111,7 @@ sub pmchkver {
     }
 
     [200, "OK", $args{detail} ? \@recs : [map {$_->{latest}} @recs],
-     {format_options=>{any=>{table_column_orders=>[[qw/module local_version cpan_version installed on_cpan latest/]]}}}];
+     {'table.fields' => [qw/module local_version cpan_version installed on_cpan latest/]}];
 }
 
 Perinci::CmdLine::Any->new(

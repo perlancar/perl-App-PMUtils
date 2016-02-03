@@ -153,9 +153,7 @@ sub pmlist {
     }
     my $meta = {};
     if ($args{detail}) {
-        $meta->{format_options}{any}{table_column_orders} = [
-            [qw/module is_core is_xs/],
-        ];
+        $meta->{'table.fields'} = [qw/module is_core is_xs/];
     }
     [200, "OK", \@res, $meta];
 }
