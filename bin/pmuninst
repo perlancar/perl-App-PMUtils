@@ -44,7 +44,7 @@ sub pmuninst {
     if ($args{uninstall_rdeps}) {
         return [412, "lcpan is required to find reverse deps"]
             unless which("lcpan");
-        require JSON;
+        require JSON::MaybeXS;
         my $res = backtick(
             {log=>1, die=>1},
             "lcpan", "rdeps", "--phase", "ALL", "--rel", "requires", "--json",
@@ -52,7 +52,7 @@ sub pmuninst {
             "--no-naked-res",
             @$mods
         );
-        $res = JSON->new->decode($res);
+        $res = JSON::MaybeXS->new->decode($res);
         my @rmods;
         for (@{ $res->[2] }) {
             my $mod = $_->{dist}; $mod =~ s/^\s+//; $mod =~ s/-/::/g;

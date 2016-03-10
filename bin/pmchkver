@@ -43,7 +43,7 @@ $SPEC{pmchkver} = {
 sub pmchkver {
     no strict 'refs';
     require HTTP::Tiny;
-    require JSON;
+    require JSON::MaybeXS;
     require Module::Path::More;
 
     my %args = @_;
@@ -83,7 +83,7 @@ sub pmchkver {
                 $rec->{note} = "Failed API request (1): $apires->{status} - $apires->{reason}";
                 last;
             }
-            eval { $apires = JSON::decode_json($apires->{content}) };
+            eval { $apires = JSON::MaybeXS::decode_json($apires->{content}) };
             if ($@) {
                 $rec->{note} = "Invalid API response: not valid JSON: $@";
                 last;
