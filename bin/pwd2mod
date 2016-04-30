@@ -1,0 +1,64 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+#use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+
+$SPEC{pwd2mod} = {
+    v => 1.1,
+    summary => 'Try to guess/extract module name from current directory',
+    description => <<'_',
+
+Will return `.` if module name cannot be guessed.
+
+_
+    args => {
+    },
+    result_naked => 1,
+};
+sub pwd2mod {
+    my %args = @_;
+
+    my $cwd = $ENV{PWD} // do { require Cwd; Cwd::cwd() };
+
+    $cwd =~ s!.+[/\\]!!;
+    $cwd =~ s/^(perl|cpan|p5|pl)-//;
+    return '.' unless $cwd =~ /\A\w+(-\w+)*\z/;
+    $cwd =~ s/-/::/g;
+    $cwd;
+}
+
+Perinci::CmdLine::Any->new(
+    url => "/main/pwd2mod",
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ % pwd
+ /home/ujang/proj/perl-Foo-Bar
+
+ % pwd2mod
+ Foo::Bar
+
+ % cd
+ % pwd
+ /home/ujang
+
+ % pwd2mod
+ .
+
+
+=head1 SEE ALSO
+
+L<pwd2dist>
