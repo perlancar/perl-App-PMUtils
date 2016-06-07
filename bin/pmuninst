@@ -12,7 +12,7 @@ use App::PMUtils;
 use File::Which;
 use IO::Prompt::I18N qw(confirm);
 use Module::Path::More qw(module_path);
-use IPC::System::Options qw(backtick);
+use IPC::System::Options qw(readpipe);
 use Perinci::CmdLine::Any;
 
 our %SPEC;
@@ -45,7 +45,7 @@ sub pmuninst {
         return [412, "lcpan is required to find reverse deps"]
             unless which("lcpan");
         require JSON::MaybeXS;
-        my $res = backtick(
+        my $res = readpipe(
             {log=>1, die=>1},
             "lcpan", "rdeps", "--phase", "ALL", "--rel", "requires", "--json",
             "-l", 2, # limit to this level for now, for speed
