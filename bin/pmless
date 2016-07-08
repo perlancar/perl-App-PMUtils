@@ -16,6 +16,10 @@ $SPEC{pmless} = {
     summary => 'Show Perl module source code with `less`',
     args => {
         module => $App::PMUtils::arg_module_single,
+        pod => {
+            schema => 'bool',
+            default => 0,
+        },
     },
     deps => {
         prog => 'less',
@@ -26,7 +30,7 @@ sub pmless {
     my %args = @_;
     my $mod = $args{module};
     my $mpath = Module::Path::More::module_path(
-        module => $mod, find_pmc=>0, find_pod=>0, find_prefix=>0);
+        module => $mod, find_pmc=>0, find_pod=>$args{pod}, find_prefix=>0);
     if (defined $mpath) {
         system "less", $mpath;
         [200, "OK"];

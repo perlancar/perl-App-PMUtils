@@ -16,6 +16,10 @@ $SPEC{pmcat} = {
     summary => 'Print Perl module source codes',
     args => {
         module => $App::PMUtils::arg_module_multiple,
+        pod => {
+            schema => 'bool',
+            default => 0,
+        },
     },
 };
 sub pmcat {
@@ -29,7 +33,7 @@ sub pmcat {
     my $has_error;
     for my $mod (@$mods) {
         $mod =~ s!/!::!g;
-        my $path = Module::Path::More::module_path(module=>$mod) or do {
+        my $path = Module::Path::More::module_path(module=>$mod, find_pod=>$args{pod}) or do {
             warn "pmcat: No such module '$mod'";
             $has_error++;
             next;
