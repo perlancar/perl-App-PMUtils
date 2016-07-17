@@ -1,0 +1,82 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{pmhtml} = {
+    v => 1.1,
+    summary => 'Render POD as HTML then show in browser',
+    description => <<'_',
+
+This function renders a POD document using `pod2html`, then open a browser to
+show the resulting HTML document.
+
+_
+    args => {
+        module => $App::PMUtils::arg_module_single,
+        pod => {
+            schema => 'bool',
+            default => 1,
+        },
+    },
+    deps => {
+        prog => 'pod2html',
+    },
+};
+sub pmhtml {
+    require Browser::Open;
+    require File::Temp;
+    require File::Util::Tempdir;
+    require Module::Path::More;
+
+    my %args = @_;
+    my $mod = $args{module};
+    my $mpath = Module::Path::More::module_path(
+        module => $mod, find_pmc=>0, find_pod=>$args{pod}, find_prefix=>0);
+    return [404, "Can't find module $mod"] unless defined $mpath;
+
+    my $tmpdir = File::Util::Tempdir::get_tempdir();
+    my $cachedir = File::Temp::tempdir(CLEANUP => 1);
+    my $name = $mod; $name =~ s/:+/_/g;
+    my ($infh, $infile) = File::Temp::tempfile(
+        "$name.XXXXXXXX", DIR=>$tmpdir, SUFFIX=>".pod");
+    my $outfile = "$infile.html";
+    system(
+        "pod2html",
+        "--infile", $mpath,
+        "--outfile", $outfile,
+        "--cachedir", $cachedir,
+    );
+    return [500, "Can't pod2html: $!"] if $?;
+    my $err = Browser::Open::open_browser("file:$outfile");
+    return [500, "Can't open browser"] if $err;
+    [200];
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmhtml',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % pmhtml Some::Module
+
+
+=head1 SEE ALSO
+
+L<pmdoc>, L<pmman>
+
+L<lcpan> (C<doc> subcommand with <--html> option)

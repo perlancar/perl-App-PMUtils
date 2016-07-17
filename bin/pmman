@@ -47,3 +47,10 @@ Perinci::CmdLine::Any->new(
 Basic usage:
 
  % pmman Some::Module
+
+
+=head1 SEE ALSO
+
+L<pmdoc>, L<pmhtml>
+
+L<lcpan> (C<doc> subcommand)
