@@ -1,5 +1,15 @@
 Revision history for App-PMUtils
 
+0.59    2016-07-17 (PERLANCAR)
+
+	- Add utility: pmhtml.
+
+	- Add --pod option to some utilities to be able to get .pod files.
+
+	- Adjust to IPC::System::Options 0.27+ (backtick() renamed to
+	  readpipe()).
+
+
 0.58    2016-04-30 (PERLANCAR)
 
 	- Add utility: pwd2mod.
