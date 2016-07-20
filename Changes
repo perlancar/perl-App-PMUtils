@@ -1,5 +1,13 @@
 Revision history for App-PMUtils
 
+0.60    2016-07-20 (PERLANCAR)
+
+        - Use 'perl::modname' schema instead of 'str' for the module arguments.
+          This results in a convenience: you can specify Foo-Bar or Foo.Bar or
+          Foo/Bar in addition to Foo::Bar and they all will be accepted and
+          normalized to Foo::Bar by the coercion rule.
+
+
 0.59    2016-07-17 (PERLANCAR)
 
 	- Add utility: pmhtml.
