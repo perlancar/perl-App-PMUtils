@@ -1,0 +1,49 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+
+$SPEC{module_dir} = {
+    v => 1.1,
+    summary => 'Get per-module shared files directory',
+    args => {
+        module => $App::PMUtils::arg_module_single,
+    },
+};
+sub module_dir {
+    require File::ShareDir;
+
+    my %args = @_;
+
+    my $mod = $args{module};
+    (my $mod_pm = "$mod.pm") =~ s!::!/!g;
+    require $mod_pm;
+
+    [200, "OK", File::ShareDir::module_dir($mod)];
+}
+
+Perinci::CmdLine::Any->new(
+    url => "/main/module_dir",
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ % module-dir IOD::Examples
+ /home/ujang/perl5/perlbrew/perls/perl-5.18.4/lib/site_perl/5.18.4/auto/share/dist/IOD-Examples
+
+
+=head1 DESCRIPTION
+
+=cut
