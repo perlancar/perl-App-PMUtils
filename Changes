@@ -1,5 +1,14 @@
 Revision history for App-PMUtils
 
+0.61    2016-08-25 (PERLANCAR)
+
+	- Add utility: pmminversion.
+
+	- Add utility: module-dir.
+
+	- Add empty module to ease finding this distro: App::ModuleUtils.
+
+
 0.60    2016-07-20 (PERLANCAR)
 
         - Use 'perl::modname' schema instead of 'str' for the module arguments.
