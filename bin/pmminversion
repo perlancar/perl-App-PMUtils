@@ -1,0 +1,105 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any::IfLOG '$log';
+
+use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{pmminversion} = {
+    v => 1.1,
+    summary => 'Get minimum required Perl version for specified modules',
+    description => <<'_',
+_
+    args => {
+        module => $App::PMUtils::arg_module_multiple,
+        detector => {
+            schema => ['str*', in=>[qw/Perl::MinimumVersion Perl::MinimumVersion::Fast/]],
+            default => 'Perl::MinimumVersion',
+        },
+        #with_minimum_external_version => {
+        #    schema => 'bool',
+        #},
+        with_minimum_syntax_version => {
+            schema => 'bool',
+        },
+        with_minimum_explicit_version => {
+            schema => 'bool',
+        },
+    },
+};
+sub pmminversion {
+    require Module::Path::More;
+
+    my %args = @_;
+    my $mods = $args{module};
+    my $det  = $args{detector} // 'Perl::MinimumVersion';
+
+    my $found;
+    my $res = [];
+    for my $mod (@$mods) {
+        $mod =~ s!/!::!g;
+        my $mpath = Module::Path::More::module_path(module=>$mod);
+        unless ($mpath) {
+            warn "Module $mod is not installed";
+            next;
+        }
+        $found++;
+
+        my $pmv;
+        if ($det eq 'Perl::MinimumVersion::Fast') {
+            require Perl::MinimumVersion::Fast;
+            $pmv = Perl::MinimumVersion::Fast->new($mpath);
+        } else {
+            require Perl::MinimumVersion;
+            $pmv = Perl::MinimumVersion->new($mpath);
+        }
+
+        my $v;
+        my $rec = {
+            module => $mod,
+        };
+        $v = $pmv->minimum_version;
+        $rec->{minimum_version} = "$v";
+        if ($args{with_minimum_explicit_version}) {
+            $rec->{minimum_explicit_version} = $pmv->minimum_explicit_version;
+        }
+        if ($args{with_minimum_syntax_version}) {
+            $rec->{minimum_syntax_version} = $pmv->minimum_syntax_version;
+        }
+
+        push @$res, $rec;
+    }
+
+    if (!$found) {
+        [404, "No such module(s): " . join(", ", @$mods)];
+    } else {
+        [200, "OK", $res, {
+            'table.fields' => [qw/module minimum_version minimum_explicit_version minimum_syntax_version/],
+        }];
+    }
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pmminversion',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ % pmminversion Some::Module Another::Module
+
+
+=head1 SEE ALSO
+
+L<Perl::MinimumVersion>, L<perlver>
+
+L<Perl::MinimumVersion::Fast>
