@@ -127,8 +127,8 @@ This is basically a shortcut for:
 
     % pmpath -Pd MODULE_OR_PREFIX_NAME
 
-Sometimes I forgot that `pmpath` has a `-d` option, and often intuitively look
-for a `pmdir` command.
+Sometimes I forgot that <prog:pmpath> has a `-d` option, and often intuitively
+look for a <prog:pmdir> command.
 
 _
     $meta->{args} = { %{ $SPEC{pmpath}{args} } }; # shalow copy
