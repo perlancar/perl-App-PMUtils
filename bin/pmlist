@@ -16,7 +16,7 @@ $SPEC{pmlist} = {
     summary => 'List Perl modules (and PODs, and module prefixes)',
     description => <<'_',
 
-This is basically a CLI interface to `Module::List`, with tab completion.
+This is basically a CLI interface to <pm:Module::List>, with tab completion.
 
 _
     args => {

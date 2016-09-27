@@ -16,8 +16,8 @@ $SPEC{pmhtml} = {
     summary => 'Render POD as HTML then show in browser',
     description => <<'_',
 
-This function renders a POD document using `pod2html`, then open a browser to
-show the resulting HTML document.
+This function renders a POD document using <prog:pod2html>, then open a browser
+to show the resulting HTML document.
 
 _
     args => {

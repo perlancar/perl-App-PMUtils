@@ -16,7 +16,7 @@ $SPEC{pmdoc} = {
     summary => 'Show documentation of Perl module',
     description => <<'_',
 
-This function executes `perldoc`. Basically what it offers is command-line
+This function executes <prog:perldoc>. Basically what it offers is command-line
 completion.
 
 _

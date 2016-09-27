@@ -28,9 +28,9 @@ _
 `load` means to load the module and read the package variable `$VERSION`. This
 means you have to actually execute the module's source code.
 
-`mm` means using `ExtUtils::MakeMaker`'s `MM->parse_version`. This uses simple
-regex over the module's source code and does not require you to actually execute
-the source code.
+`mm` means using <pm:ExtUtils::MakeMaker>'s `MM->parse_version`. This uses
+simple regex over the module's source code and does not require you to actually
+execute the source code.
 
 _
         },
