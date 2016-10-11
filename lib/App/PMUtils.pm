@@ -141,6 +141,38 @@ sub pmdir {
     pmpath(@_, prefix=>1, dir=>1);
 }
 
+$SPEC{rel2mod} = {
+    v => 1.1,
+    summary => 'Convert release name (e.g. Foo-Bar-1.23.tar.gz) to '.
+        'module name (Foo::Bar)',
+    args => {
+        releases => {
+            #'x.name.is_plural' => 1,
+            schema => ['array*', of=>'str*'],
+            req => 1,
+            pos => 0,
+            greedy => 1,
+            cmdline_src => 'stdin_or_args',
+        },
+    },
+    result_naked => 1,
+};
+sub rel2mod {
+    my %args = @_;
+
+    #use DD; dd \%args;
+
+    my @res;
+    for (@{ $args{releases} }) {
+        s!.+/!!; # remove directory path
+        s/-v?\d.+//;
+        s/-/::/g;
+        push @res, $_;
+    }
+
+    \@res;
+}
+
 1;
 # ABSTRACT: Command-line utilities related to Perl modules
 
