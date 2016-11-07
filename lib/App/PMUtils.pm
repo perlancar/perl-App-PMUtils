@@ -165,7 +165,7 @@ sub rel2mod {
     my @res;
     for (@{ $args{releases} }) {
         s!.+/!!; # remove directory path
-        s/-v?\d.+//;
+        s/(.+)-v?\d.+/$1/;
         s/-/::/g;
         push @res, $_;
     }
