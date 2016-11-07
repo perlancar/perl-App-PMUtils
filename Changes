@@ -1,5 +1,11 @@
 Revision history for App-PMUtils
 
+0.63    2016-11-07 (PERLANCAR)
+
+	- [Bugfix] rel2mod: Fix regex (e.g. Foo-Bar-2016-0.01.tar.gz was
+	  converted to Foo::Bar instead of Foo::Bar::2016).
+
+
 0.62    2016-10-11 (PERLANCAR)
 
 	- Add utility: rel2mod.
