@@ -1,5 +1,13 @@
 Revision history for App-PMUtils
 
+0.65    2016-12-27 (PERLANCAR)
+
+	- No functional changes.
+
+	- [dist] Moving spec prereq from DevelopRecommends to
+	  DevelopSuggests with _SPEC:: prefix.
+
+
 0.64    2016-12-27 (PERLANCAR)
 
 	- No functional changes.
