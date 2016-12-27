@@ -1,5 +1,13 @@
 Revision history for App-PMUtils
 
+0.66    2016-12-28 (PERLANCAR)
+
+	- No functional changes.
+
+	- [dist] Fix expressing follow-spec prereq relationship with
+	  x_spec.
+
+
 0.65    2016-12-27 (PERLANCAR)
 
 	- No functional changes.
