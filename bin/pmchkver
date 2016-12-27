@@ -13,7 +13,7 @@ use Perinci::CmdLine::Any;
 our %SPEC;
 $SPEC{pmchkver} = {
     v => 1.1,
-    summary => "Check locale module's version against version on CPAN",
+    summary => "Check local module's version against version on CPAN",
     args => {
         module => $App::PMUtils::arg_module_multiple,
         detail => {
