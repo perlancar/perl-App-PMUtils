@@ -51,7 +51,7 @@ _
         },
         xs => {
             summary => 'Only list XS modules',
-            'summary.alt.bool.neg' => 'Only list PP (pure-perl) modules',
+            'summary.alt.bool.not' => 'Only list PP (pure-perl) modules',
             schema  => 'bool',
             tags => ['category:filtering'],
             cmdline_aliases => {
@@ -64,13 +64,13 @@ _
         },
         core => {
             summary => 'Only list core modules',
-            'summary.alt.bool.neg' => 'Only list non-core modules',
+            'summary.alt.bool.not' => 'Only list non-core modules',
             schema  => 'bool',
             tags => ['category:filtering'],
         },
         core_dirs => {
             summary => 'Only search in core directories',
-            'summary.alt.bool.neg' => 'Only search in non-core directories',
+            'summary.alt.bool.not' => 'Only search in non-core directories',
             schema => 'bool',
             tags => ['category:filtering'],
         },

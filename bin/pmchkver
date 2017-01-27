@@ -22,19 +22,19 @@ $SPEC{pmchkver} = {
         },
         latest => {
             summary => 'Only show module when it is the latest version',
-            'summary.alt.bool.neg' => 'Only show module when it is not the latest version',
+            'summary.alt.bool.not' => 'Only show module when it is not the latest version',
             schema => 'bool',
             tags => ['category:filtering'],
         },
         installed => {
             summary => 'Only show module when it is installed locally',
-            'summary.alt.bool.neg' => 'Only show module when it is not installed locally',
+            'summary.alt.bool.not' => 'Only show module when it is not installed locally',
             schema => 'bool',
             tags => ['category:filtering'],
         },
         on_cpan => {
             summary => 'Only show module when it is on CPAN',
-            'summary.alt.bool.neg' => 'Only show module when it is not on CPAN',
+            'summary.alt.bool.not' => 'Only show module when it is not on CPAN',
             schema => 'bool',
             tags => ['category:filtering'],
         },
