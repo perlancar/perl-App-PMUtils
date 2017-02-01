@@ -1,0 +1,119 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{podlist} = {
+    v => 1.1,
+    summary => 'List Perl .pod files',
+    description => <<'_',
+
+This is basically a shortcut for:
+
+    % pmlist --pod --no-pm --no-prefix ...
+
+_
+    args => {
+        query => {
+            schema  => 'str*',
+            default => '',
+            pos     => 0,
+            completion => sub {
+                require Complete::Module;
+                my %args = @_;
+                Complete::Module::complete_module(word=>$args{word});
+            },
+            tags => ['category:filtering'],
+        },
+        core_dirs => {
+            summary => 'Only search in core directories',
+            'summary.alt.bool.not' => 'Only search in non-core directories',
+            schema => 'bool',
+            tags => ['category:filtering'],
+        },
+        exclude_curdir => {
+            summary => 'Do not include "." in search dir',
+            schema => 'bool',
+            description => <<'_',
+
+By default, Perl usually adds `.` (the current directory) in the search dir.
+This option removes it.
+
+_
+            tags => ['category:filtering'],
+        },
+        recurse => {
+            schema  => 'bool',
+            cmdline_aliases => { R => {} },
+        },
+        detail => {
+            summary => 'Return detailed records instead of just module names',
+            schema  => 'bool',
+            cmdline_aliases => { l=>{} },
+        },
+    },
+};
+sub podlist {
+    require Module::List;
+    my %args = @_;
+
+    my $query = $args{query} // "";
+    $query =~ s!/!::!g; # convenience
+
+    # i wonder why Module::List is not more forgiving
+    $query .= "::" unless !length($query) || $query =~ /::\z/;
+
+    local @INC = @INC;
+    @INC = do {
+        no warnings 'once';
+        require Config;
+        @Config::Config{qw(privlibexp archlibexp)};
+    } if $args{core_dirs};
+    @INC = grep { $_ ne '.' } @INC if $args{exclude_curdir};
+
+    my $mods = Module::List::list_modules(
+        $query,
+        {
+            list_prefixes => 0,
+            list_modules  => 0,
+            list_pod      => 1,
+            recurse       => $args{recurse},
+        });
+    my @res;
+  MOD:
+    for my $mod (sort keys %$mods) {
+        if ($args{detail}) {
+            push @res, {
+                module  => $mod,
+            };
+        } else {
+            push @res, $mod;
+        }
+    }
+    my $meta = {};
+    if ($args{detail}) {
+        $meta->{'table.fields'} = [qw/module/];
+    }
+    [200, "OK", \@res, $meta];
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/podlist',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % podlist Text::
