@@ -1,3 +1,15 @@
+0.67    2017-02-01 (PERLANCAR)
+
+	- pmpath: Adjust to Module::Path::More 0.32 (find_* options are now
+	  ints instead of just bools, so we can customize what type to
+	  return first).
+
+	- Add utility: podlist.
+
+	- Fix Rinci metadata: Used wrong attribute summary.alt.bool.neg
+	  instead of summary.alt.bool.not.
+
+
 0.66    2016-12-28 (PERLANCAR)
 
 	- No functional changes.
