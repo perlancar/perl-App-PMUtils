@@ -46,19 +46,19 @@ $SPEC{pmpath} = {
             cmdline_aliases => {P=>{}},
         },
         pm => {
-            schema => 'bool',
+            schema => ['int*', min=>0],
             default => 1,
         },
         pmc => {
-            schema => 'bool',
+            schema => ['int*', min=>0],
             default => 0,
         },
         pod => {
-            schema => 'bool',
+            schema => ['int*', min=>0],
             default => 0,
         },
         prefix => {
-            schema => 'bool',
+            schema => ['int*', min=>0],
             default => 0,
         },
         dir => {
