@@ -78,7 +78,7 @@ sub pmchkver {
         next if defined($args{installed}) && ($args{installed} xor $rec->{installed});
 
         {
-            my $apires = HTTP::Tiny->new->get("http://api.metacpan.org/v0/module/$mod?field=version");
+            my $apires = HTTP::Tiny->new->get("http://fastapi.metacpan.org/v1/module/$mod?fields=version");
             unless ($apires->{success}) {
                 $rec->{note} = "Failed API request (1): $apires->{status} - $apires->{reason}";
                 last;
