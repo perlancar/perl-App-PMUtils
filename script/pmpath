@@ -29,7 +29,7 @@ Find all modules (-a), return absolute paths (-P):
 
  % pmpath -aP Some::Module Another::Mod
 
-# INSERT_BLOCK: bin/pmdir protip_cdpm
+# INSERT_BLOCK: script/pmdir protip_cdpm
 
 
 =head1 SEE ALSO

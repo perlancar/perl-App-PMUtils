@@ -69,7 +69,11 @@ sub pmuninst {
 
     for my $mod (@$mods) {
         $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
-        system "cpanm", "--uninstall", $mod;
+        system(
+            "cpanm", "--uninstall",
+            ($args{confirm_yes} ? ("-f") : ()),
+            $mod,
+        );
     }
     [200, "OK"]; # XXX check/accumulate success status
 }
