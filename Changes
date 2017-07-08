@@ -1,5 +1,7 @@
 0.69    2017-07-08 (PERLANCAR)
 
+        - [ux] pmuninst: When --confirm-yes, use 'cpanm uninstall -f'.
+
 	- Replace Log::Any with Log::ger.
 
 
