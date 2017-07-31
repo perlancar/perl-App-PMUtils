@@ -22,6 +22,12 @@ $SPEC{pmcost} = {
 _
     args => {
         module => $App::PMUtils::arg_module_multiple,
+        import => {
+            summary => 'Load module with default exports: use MOD',
+            'summary.alt.bool.not' => 'Load module without import(): use MOD ()',
+            schema => 'bool*',
+            default => 1,
+        },
         hide_core => {
             schema => 'bool',
         },
@@ -44,6 +50,7 @@ _
 sub pmcost {
     my %args = @_;
     my $mods = $args{module};
+    my $import = $args{import} // 1;
 
     my $de_import = "verbose,1";
     $de_import .= ",hide_core,1" if $args{hide_core};
@@ -54,7 +61,7 @@ sub pmcost {
 
     for my $mod (@$mods) {
         $mod =~ s!/!::!g;
-        push @cmd, "-M$mod";
+        push @cmd, $import ? "-M$mod" : "-m$mod";
     }
 
     push @cmd, "-e1";
