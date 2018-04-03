@@ -80,12 +80,13 @@ sub pmbin {
             warn "Can't open $path: $!\n";
             next;
         };
-        for (<$fh>) {
+        while (<$fh>) {
             chomp;
             next unless m!/(bin|scripts?)/!;
             s!.+/!! unless $args{full_path};
             push @$res, $_;
         }
+        close $fh;
     }
 
     if ($has_ok && $has_nok) {
