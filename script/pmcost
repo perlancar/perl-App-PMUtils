@@ -105,3 +105,5 @@ Perinci::CmdLine::Any->new(
 =head1 SEE ALSO
 
 L<plcost> (from L<App::PlUtils> distribution)
+
+L<bencher-module-startup-overhead> from L<App::BencherUtils>
