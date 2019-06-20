@@ -15,7 +15,7 @@ $SPEC{pmless} = {
     v => 1.1,
     summary => 'Show Perl module source code with `less`',
     args => {
-        module => $App::PMUtils::arg_module_single,
+        modules => $App::PMUtils::arg_module_multiple,
         pod => {
             schema => 'bool',
             default => 0,
@@ -28,15 +28,20 @@ $SPEC{pmless} = {
 sub pmless {
     require Module::Path::More;
     my %args = @_;
-    my $mod = $args{module};
-    my $mpath = Module::Path::More::module_path(
-        module => $mod, find_pmc=>0, find_pod=>$args{pod}, find_prefix=>0);
-    if (defined $mpath) {
-        system "less", $mpath;
-        [200, "OK"];
-    } else {
-        [404, "Can't find module $mod"];
+    my $mods = $args{modules};
+    my @mpaths;
+    for my $mod (@$mods) {
+        my $mpath = Module::Path::More::module_path(
+            module => $mod, find_pmc=>0, find_pod=>$args{pod}, find_prefix=>0);
+        if (defined $mpath) {
+            push @mpaths, $mpath;
+        } else {
+            warn "pmless: Can't find path for module '$mod'\n";
+        }
     }
+    return [404, "Can't find path(s) for module(s)"] unless @mpaths;
+    system "less", @mpaths;
+    [200, "OK"];
 }
 
 Perinci::CmdLine::Any->new(
