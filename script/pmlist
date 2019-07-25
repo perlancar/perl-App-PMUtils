@@ -16,7 +16,8 @@ $SPEC{pmlist} = {
     summary => 'List Perl modules (and PODs, and module prefixes)',
     description => <<'_',
 
-This is basically a CLI interface to <pm:Module::List>, with tab completion.
+This is basically a CLI interface to <pm:PERLANCAR::Module::List>, with tab
+completion.
 
 _
     args => {
@@ -97,7 +98,9 @@ _
     },
 };
 sub pmlist {
-    require Module::List;
+    require PERLANCAR::Module::List;
+    require String::Wildcard::Bash;
+
     my %args = @_;
 
     require Module::CoreList::More if defined($args{core}) || $args{detail};
@@ -107,7 +110,7 @@ sub pmlist {
     $query =~ s!/!::!g; # convenience
 
     # i wonder why Module::List is not more forgiving
-    $query .= "::" unless !length($query) || $query =~ /::\z/;
+    $query .= "::" unless !length($query) || $query =~ /::\z/ || String::Wildcard::Bash::contains_wildcard($query);
 
     local @INC = @INC;
     @INC = do {
@@ -117,9 +120,10 @@ sub pmlist {
     } if $args{core_dirs};
     @INC = grep { $_ ne '.' } @INC if $args{exclude_curdir};
 
-    my $mods = Module::List::list_modules(
+    my $mods = PERLANCAR::Module::List::list_modules(
         $query,
         {
+            wildcard      => 1,
             list_prefixes => $args{prefix},
             list_modules  => $args{pm},
             list_pod      => $args{pod},
@@ -170,3 +174,9 @@ Perinci::CmdLine::Any->new(
 Basic usage:
 
  % pmlist Text::
+
+Wildcard:
+
+ % pmlist Module::P*
+ % pmlist Module/P**
+ % pmlist **::Tiny
