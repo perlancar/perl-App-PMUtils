@@ -1,3 +1,8 @@
+0.726   2019-07-25  Released-By: PERLANCAR; Urgency: medium
+
+	- [ux] Allow wildcard in pmlist.
+
+
 0.725   2019-07-25  Released-By: PERLANCAR; Urgency: medium
 
 	- [ux] Use perl::modnames (but somehow we still need to defined our own
