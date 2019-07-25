@@ -8,7 +8,7 @@ use 5.010001;
 our %SPEC;
 
 our $arg_module_multiple = {
-    schema => ['array*' => of=>'perl::modname*', min_len=>1],
+    schema => ['perl::modnames*', min_len=>1],
     req    => 1,
     pos    => 0,
     greedy => 1,
