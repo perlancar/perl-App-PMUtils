@@ -1,3 +1,11 @@
+0.725   2019-07-25  Released-By: PERLANCAR; Urgency: medium
+
+	- [ux] Use perl::modnames (but somehow we still need to defined our own
+	  element_completion property, this might be a bug). This enables
+	  wildcard expanding in commands that accept multiple perl module names,
+	  e.g.: 'pmpath Module::P*' or 'pmversion Module/P**'.
+
+
 0.724   2019-06-20  Released-By: PERLANCAR
 
 	- pmless: Accept multiple arguments.
