@@ -14,6 +14,8 @@ our %SPEC;
 
 Perinci::CmdLine::Any->new(
     url => '/App/PMUtils/pmpath',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT: Get path to locally installed Perl module

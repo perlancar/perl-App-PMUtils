@@ -63,6 +63,8 @@ sub pminfo {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pminfo',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

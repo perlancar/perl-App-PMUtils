@@ -102,6 +102,8 @@ sub pmbin {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pmbin',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

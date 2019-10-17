@@ -88,6 +88,8 @@ sub pmminversion {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pmminversion',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

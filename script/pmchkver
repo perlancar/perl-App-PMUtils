@@ -120,6 +120,8 @@ sub pmchkver {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pmchkver',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

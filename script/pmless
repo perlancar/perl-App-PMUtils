@@ -46,6 +46,8 @@ sub pmless {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pmless',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

@@ -14,6 +14,8 @@ our %SPEC;
 
 Perinci::CmdLine::Any->new(
     url => '/App/PMUtils/pmdir',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT: Get directory of locally installed Perl module/prefix
