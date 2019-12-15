@@ -207,7 +207,8 @@ sub pmunlink {
 
     my $num_success = 0;
     my $num_fail    = 0;
-    for my $path (@{ $res->[2] }) {
+    for my $item (@{ $res->[2] }) {
+        my $path = ref $item eq 'HASH' ? $item->{path} : $item;
         my $success;
 
         if ($args{-dry_run}) {
