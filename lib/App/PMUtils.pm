@@ -4,6 +4,9 @@ package App::PMUtils;
 # VERSION
 
 use 5.010001;
+use strict;
+use warnings;
+use Log::ger;
 
 our %SPEC;
 
@@ -30,32 +33,40 @@ our $arg_module_single = {
     },
 };
 
+our %argopts_pmpath_all = (
+    all => {
+        summary => 'Get all found files for each module instead of the first one',
+        schema => 'bool',
+        cmdline_aliases => {a=>{}},
+    },
+);
+
+our %argopts_pmpath_types = (
+    pm => {
+        schema => ['int*', min=>0],
+        default => 1,
+    },
+    pmc => {
+        schema => ['int*', min=>0],
+        default => 0,
+    },
+    pod => {
+        schema => ['int*', min=>0],
+        default => 0,
+    },
+);
+
 $SPEC{pmpath} = {
     v => 1.1,
     summary => 'Get path to locally installed Perl module',
     args => {
         module => $App::PMUtils::arg_module_multiple,
-        all => {
-            summary => 'Return all found files for each module instead of the first one',
-            schema => 'bool',
-            cmdline_aliases => {a=>{}},
-        },
+        %argopts_pmpath_all,
+        %argopts_pmpath_types,
         abs => {
             summary => 'Absolutify each path',
             schema => 'bool',
             cmdline_aliases => {P=>{}},
-        },
-        pm => {
-            schema => ['int*', min=>0],
-            default => 1,
-        },
-        pmc => {
-            schema => ['int*', min=>0],
-            default => 0,
-        },
-        pod => {
-            schema => ['int*', min=>0],
-            default => 0,
         },
         prefix => {
             schema => ['int*', min=>0],
@@ -172,6 +183,52 @@ sub rel2mod {
 
     \@res;
 }
+
+$SPEC{pmunlink} = {
+    v => 1.1,
+    summary => 'Unlink (remove) locally installed Perl module',
+    args => {
+        module => $App::PMUtils::arg_module_multiple,
+        %argopts_pmpath_all,
+        %argopts_pmpath_types,
+    },
+    features => {
+        dry_run => 1,
+    },
+};
+sub pmunlink {
+    my %args = @_;
+
+    my $res = pmpath(%args);
+    return $res unless $res->[0] == 200;
+
+    return [304, "No module files to delete"] unless @{ $res->[2] };
+
+    my $num_success = 0;
+    my $num_fail    = 0;
+    for my $path (@{ $res->[2] }) {
+        my $success;
+
+        if ($args{-dry_run}) {
+            log_trace "[DRY_RUN] Unlinking $path ...";
+            $num_success++;
+            next;
+        }
+        log_trace "Unlinking $path ...";
+        if (unlink $path) {
+            $num_success++;
+        } else {
+            warn "Can't unlink $path: $!\n";
+            $num_fail++;
+        }
+    }
+
+    [$num_success ? 200:500,
+     $num_success ? "OK" : "All files failed",
+     undef,
+     {'cmdline.exit_code' => $num_fail ? 1:0}];
+}
+
 
 1;
 # ABSTRACT: Command-line utilities related to Perl modules
