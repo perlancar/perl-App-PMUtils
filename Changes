@@ -409,7 +409,7 @@
          - Add pmcore.
 
 
-0.20     2014-08-16 (SHARYANTO) - Happy 19th CPAN Day!
+0.20     2014-08-16  Released-By: SHARYANTO; Note: Happy 19th CPAN Day!
 
          - Use Perinci::CmdLine::Any.
 
@@ -536,3 +536,4 @@
 0.01    2014-06-24  Released-By: SHARYANTO
 
         - First release.
+
