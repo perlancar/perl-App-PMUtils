@@ -90,3 +90,8 @@ Perinci::CmdLine::Any->new(
 =head1 SYNOPSIS
 
  % pmuninst App::Stopwatch
+
+
+=head1 SEE ALSO
+
+L<pm-uninstall> from L<App::pmuninstall>
