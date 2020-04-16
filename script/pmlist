@@ -95,6 +95,14 @@ _
             schema  => 'bool',
             cmdline_aliases => { l=>{} },
         },
+        with_path => {
+            summary => 'Instead of module names, return module paths instead',
+            schema => 'bool',
+            cmdline_aliases => { x=>{} },
+        },
+    },
+    args_rels => {
+        choose_one => ['detail', 'with_path'],
     },
 };
 sub pmlist {
@@ -123,6 +131,7 @@ sub pmlist {
     my $mods = PERLANCAR::Module::List::list_modules(
         $query,
         {
+            return_path   => 1,
             wildcard      => 1,
             list_prefixes => $args{prefix},
             list_modules  => $args{pm},
@@ -148,16 +157,17 @@ sub pmlist {
         if ($args{detail}) {
             push @res, {
                 module  => $mod,
+                path    => $mods->{$mod},
                 is_core => $is_core // Module::CoreList::More->is_core($mod),
                 is_xs   => $is_xs_calculated ? $is_xs : Module::XSOrPP::is_xs($mod),
             };
         } else {
-            push @res, $mod;
+            push @res, $args{with_path} ? $mods->{$mod} : $mod;
         }
     }
     my $meta = {};
     if ($args{detail}) {
-        $meta->{'table.fields'} = [qw/module is_core is_xs/];
+        $meta->{'table.fields'} = [qw/module path is_core is_xs/];
     }
     [200, "OK", \@res, $meta];
 }
