@@ -1,3 +1,9 @@
+0.731   2020-04-16  Released-By: PERLANCAR; Urgency: medium
+
+	- pmlist: Add --with-path (-x) option, also return module path in
+	  --detail (-l).
+
+
 0.730   2020-01-31  Released-By: PERLANCAR; Urgency: low
 
 	[pmuninst]
