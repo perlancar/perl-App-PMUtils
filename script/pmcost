@@ -21,7 +21,12 @@ $SPEC{pmcost} = {
 
 _
     args => {
-        module => $App::PMUtils::arg_module_multiple,
+        module => {
+            schema => ['array*', of=>'perl::modname_with_optional_args*'],
+            req => 1,
+            pos => 0,
+            slurpy => 1,
+        },
         import => {
             summary => 'Load module with default exports: use MOD',
             'summary.alt.bool.not' => 'Load module without import(): use MOD ()',
