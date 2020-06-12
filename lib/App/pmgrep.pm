@@ -30,7 +30,7 @@ _
         modules => {
             'x.name.is_plural' => 1,
             'x.name.singular' => 'module',
-            schema => ['array*', of=>'perl::modname_or_prefix*'],
+            schema => 'perl::modnames*',
             pos => 1,
             greedy => 1,
             description => <<'_',
