@@ -25,6 +25,14 @@ This is a like the Unix command **grep** but instead of specifying filenames,
 you specify module names or prefixes. The utility will search module source
 files from Perl's `@INC`.
 
+Examples:
+
+    # Find pre-increment in all Perl module files
+    % pmgrep '\+\+\$'
+
+    # Find some pattern in all Data::Sah::Coerce::* modules (note ** wildcard for recursing)
+    % pmgrep 'return ' Data::Sah::Coerce::**
+
 _
     add_args    => {
         modules => {
