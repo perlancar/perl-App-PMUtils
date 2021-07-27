@@ -278,6 +278,8 @@ L<App::IODUtils>, utilities related to L<IOD> configuration files.
 
 L<App::LedgerUtils>, utilities related to Ledger CLI files.
 
+L<App::PerlReleaseUtils>, utilities related to Perl distribution releases.
+
 L<App::PlUtils>, utilities related to Perl scripts.
 
 L<App::PMUtils>, utilities related to Perl modules.
