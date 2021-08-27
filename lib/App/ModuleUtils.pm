@@ -1,6 +1,10 @@
+# no code
+## no critic: TestingAndDebugging::RequireUseStrict
 package App::ModuleUtils;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 1;
