@@ -1,12 +1,14 @@
 package App::PMUtils;
 
-# DATE
-# VERSION
-
 use 5.010001;
 use strict;
 use warnings;
 use Log::ger;
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
 
 our %SPEC;
 
@@ -231,6 +233,31 @@ sub pmunlink {
      {'cmdline.exit_code' => $num_fail ? 1:0}];
 }
 
+$SPEC{pmabstract} = {
+    v => 1.1,
+    summary => 'Extract the abstract of locally installed Perl module(s)',
+    args => {
+        module => $App::PMUtils::arg_module_multiple,
+    },
+};
+sub pmabstract {
+    require Module::Abstract;
+
+    my %args = @_;
+    my @rows;
+    for my $mod (@{ $args{module} }) {
+        push @rows, {
+            module => $mod,
+            abstract => Module::Abstract::module_abstract($mod),
+        };
+    }
+
+    if (@rows > 1) {
+        return [200, "OK", \@rows, {'table.fields'=>[qw/module abstract/]}];
+    } else {
+        return [200, "OK", $rows[0]{abstract}];
+    }
+}
 
 1;
 # ABSTRACT: Command-line utilities related to Perl modules

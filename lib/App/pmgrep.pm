@@ -2,9 +2,6 @@
 
 package App::pmgrep;
 
-# DATE
-# VERSION
-
 use 5.010001;
 use strict;
 use warnings;
@@ -12,6 +9,11 @@ use Log::ger;
 
 use AppBase::Grep;
 use Perinci::Sub::Util qw(gen_modified_sub);
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
 
 our %SPEC;
 

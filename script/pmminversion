@@ -1,8 +1,5 @@
 #!perl
 
-# DATE
-# VERSION
-
 use 5.010;
 use strict;
 use warnings;
@@ -10,6 +7,11 @@ use Log::ger;
 
 use App::PMUtils;
 use Perinci::CmdLine::Any;
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
 
 our %SPEC;
 $SPEC{pmminversion} = {
