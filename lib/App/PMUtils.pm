@@ -14,10 +14,15 @@ our %SPEC;
 
 our $arg_module_multiple = {
     #schema => ['perl::modnames*', min_len=>1], # XXX Perinci::Sub::GetArgs::Argv can't yet handle case for greedy=1 and when 'array' is not specified explicitly
-    schema => ['array*', of=>['perl::modname*'], min_len=>1],
-    req    => 1,
+    schema => ['array*', {
+        of=>['perl::modname*'],
+        min_len=>1,
+        'x.perl.default_value_rules' => ["Perl::these_mods"],
+    }],
+    'x.perinci.cmdline.default_from_schema' => 1,
+    #req    => 1,
     pos    => 0,
-    greedy => 1,
+    slurpy => 1,
     element_completion => sub {
         require Complete::Module;
         my %args = @_;
@@ -26,8 +31,11 @@ our $arg_module_multiple = {
 };
 
 our $arg_module_single = {
-    schema => 'perl::modname*',
-    req    => 1,
+    schema => ['perl::modname*', {
+        'x.perl.default_value_rules' => ["Perl::this_mod"],
+    }],
+    'x.perinci.cmdline.default_from_schema' => 1,
+    #req    => 1,
     pos    => 0,
     completion => sub {
         require Complete::Module;
