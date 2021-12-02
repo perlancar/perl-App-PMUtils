@@ -267,6 +267,37 @@ sub pmabstract {
     }
 }
 
+$SPEC{update_this_mod} = {
+    v => 1.1,
+    summary => 'Update "this" Perl module',
+    description => <<'_',
+
+Will use <pm:App::ThisDist>'s `this_mod()` to find out what the current Perl
+module is, then run "cpanm -n" against the module. It's a convenient shortcut
+for:
+
+    % this-mod | cpanm -n
+
+_
+    args => {
+        # XXX cpanm options
+    },
+    deps => {
+        prog => 'cpanm',
+    },
+};
+sub update_this_mod {
+    require App::ThisDist;
+    require IPC::System::Options;
+
+    my %args = @_;
+
+    my $mod = App::ThisDist::this_mod();
+    return [412, "Can't determine the current module"] unless defined $mod;
+    IPC::System::Options::system({log=>1, die=>1}, "cpanm", "-n", $mod);
+    [200];
+}
+
 1;
 # ABSTRACT: Command-line utilities related to Perl modules
 
