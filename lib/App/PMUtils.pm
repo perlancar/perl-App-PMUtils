@@ -19,7 +19,6 @@ our $arg_module_multiple = {
         min_len=>1,
         'x.perl.default_value_rules' => ["Perl::these_mods"],
     }],
-    'x.perinci.cmdline.default_from_schema' => 1,
     #req    => 1,
     pos    => 0,
     slurpy => 1,
@@ -34,7 +33,6 @@ our $arg_module_single = {
     schema => ['perl::modname*', {
         'x.perl.default_value_rules' => ["Perl::this_mod"],
     }],
-    'x.perinci.cmdline.default_from_schema' => 1,
     #req    => 1,
     pos    => 0,
     completion => sub {
