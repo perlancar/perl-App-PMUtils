@@ -18,7 +18,7 @@ $SPEC{pmlist} = {
     summary => 'List Perl modules (and PODs, and module prefixes)',
     description => <<'_',
 
-This is basically a CLI interface to <pm:PERLANCAR::Module::List>, with tab
+This is basically a CLI interface to <pm:Module::List::More>, with tab
 completion.
 
 _
@@ -108,7 +108,7 @@ _
     },
 };
 sub pmlist {
-    require PERLANCAR::Module::List;
+    require Module::List::More;
     require String::Wildcard::Bash;
 
     my %args = @_;
@@ -130,7 +130,7 @@ sub pmlist {
     } if $args{core_dirs};
     @INC = grep { $_ ne '.' } @INC if $args{exclude_curdir};
 
-    my $mods = PERLANCAR::Module::List::list_modules(
+    my $mods = Module::List::More::list_modules(
         $query,
         {
             return_path   => 1,
@@ -187,7 +187,13 @@ Perinci::CmdLine::Any->new(
 
 Basic usage:
 
- % pmlist Text::
+ % pmlist Text:: ; # search one level deep
+ % pmlist Text   ; # same as above
+
+ % pmlist Text -R ; # search recursively (multiple levels)
+
+ % pmlist Type::Tiny -R --pod        ; # search .pm as well as .pod
+ % pmlist Type::Tiny -R --pod --nopm ; # search .pod only
 
 Wildcard:
 

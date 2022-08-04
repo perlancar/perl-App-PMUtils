@@ -69,8 +69,8 @@ _
         },
     },
     output_code => sub {
+        require Module::List::More;
         require Module::Path::More;
-        require PERLANCAR::Module::List;
 
         my %args = @_;
         $args{pm} //= 1;
@@ -78,7 +78,7 @@ _
         my %files;
         for my $q (@{ $args{modules} // [""] }) {
             if ($q eq '' || $q =~ /::\z/ || $args{recursive}) {
-                my $mods = PERLANCAR::Module::List::list_modules(
+                my $mods = Module::List::More::list_modules(
                     $q eq '' || $q =~ /::\z/ ? $q : "$q\::",
                     {
                         list_modules => $args{pm} || $args{pmc},
