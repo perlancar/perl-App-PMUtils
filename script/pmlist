@@ -102,6 +102,10 @@ _
             schema => 'bool',
             cmdline_aliases => { x=>{} },
         },
+        ls_mode => {
+            schema => 'bool*',
+            default => 1,
+        },
     },
     args_rels => {
         choose_one => ['detail', 'with_path'],
@@ -117,10 +121,6 @@ sub pmlist {
     require Module::XSOrPP if defined($args{xs}) || $args{detail};
 
     my $query = $args{query} // "";
-    $query =~ s!/!::!g; # convenience
-
-    # i wonder why Module::List is not more forgiving
-    $query .= "::" unless !length($query) || $query =~ /::\z/ || String::Wildcard::Bash::contains_wildcard($query);
 
     local @INC = @INC;
     @INC = do {
@@ -139,6 +139,7 @@ sub pmlist {
             list_modules  => $args{pm},
             list_pod      => $args{pod},
             recurse       => $args{recurse},
+            ls_mode       => $args{ls_mode},
         });
     my @res;
   MOD:
@@ -159,7 +160,7 @@ sub pmlist {
         if ($args{detail}) {
             push @res, {
                 module  => $mod,
-                path    => $mods->{$mod},
+                path    => $mods->{$mod}{module_path},
                 is_core => $is_core // Module::CoreList::More->is_core($mod),
                 is_xs   => $is_xs_calculated ? $is_xs : Module::XSOrPP::is_xs($mod),
             };
@@ -187,10 +188,9 @@ Perinci::CmdLine::Any->new(
 
 Basic usage:
 
- % pmlist Text:: ; # search one level deep
- % pmlist Text   ; # same as above
-
- % pmlist Text -R ; # search recursively (multiple levels)
+ % pmlist Mo      ; # search Mo.pm
+ % pmlist Mo::    ; # search one level deep
+ % pmlist Mo:: -R ; # search recursively (multiple levels)
 
  % pmlist Type::Tiny -R --pod        ; # search .pm as well as .pod
  % pmlist Type::Tiny -R --pod --nopm ; # search .pod only
