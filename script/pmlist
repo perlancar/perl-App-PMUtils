@@ -82,8 +82,8 @@ _
             schema => 'bool',
             description => <<'_',
 
-By default, Perl usually adds `.` (the current directory) in the search dir.
-This option removes it.
+Older perls still include "." in default `@INC`. This option removes "." from
+`@INC`. In newer perls this option should be unnecessary.
 
 _
             tags => ['category:filtering'],
@@ -191,6 +191,8 @@ Basic usage:
  % pmlist Mo      ; # search Mo.pm
  % pmlist Mo::    ; # search one level deep
  % pmlist Mo:: -R ; # search recursively (multiple levels)
+
+ % pmlist Mo:: -l ; # list detailed records e.g. path (much like 'ls -l' equivanet instead of just 'ls')
 
  % pmlist Type::Tiny -R --pod        ; # search .pm as well as .pod
  % pmlist Type::Tiny -R --pod --nopm ; # search .pod only
