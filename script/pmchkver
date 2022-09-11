@@ -21,6 +21,7 @@ $SPEC{pmchkver} = {
         detail => {
             summary => 'Show detail records intead of just module names',
             schema => 'bool',
+            cmdline_aliases => {l=>{}},
         },
         latest => {
             summary => 'Only show module when it is the latest version',
@@ -112,7 +113,7 @@ sub pmchkver {
         push @recs, $rec;
     }
 
-    [200, "OK", $args{detail} ? \@recs : [map {$_->{latest}} @recs],
+    [200, "OK", $args{detail} ? \@recs : [map {@recs > 1 ? [$_->{module}, $_->{latest}] : $_->{latest}} @recs],
      {
          'table.fields' => [qw/module local_version cpan_version installed on_cpan latest/],
          ('cmdline.result.interactive' => "Installed $recs[0]{module} ($recs[0]{local_version}) is ".
