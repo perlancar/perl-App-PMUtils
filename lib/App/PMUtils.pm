@@ -13,13 +13,20 @@ use Log::ger;
 our %SPEC;
 
 our $arg_module_multiple = {
-    #schema => ['perl::modnames*', min_len=>1], # XXX Perinci::Sub::GetArgs::Argv can't yet handle case for greedy=1 and when 'array' is not specified explicitly
+
+    # XXX Perinci::Sub::GetArgs::Argv can't yet handle case for greedy=1 and when 'array' is not specified explicitly
+    #schema => ['perl::modnames*', {
+    #    min_len=>1,
+    #    'x.perl.default_value_rules' => ["Perl::these_mods"],
+    #}],
+
     schema => ['array*', {
         of=>['perl::modname*'],
         min_len=>1,
         'x.perl.default_value_rules' => ["Perl::these_mods"],
+        "x.perl.coerce_rules" => ["From_str_or_array::expand_perl_modname_wildcard"],
     }],
-    #req    => 1,
+
     pos    => 0,
     slurpy => 1,
     element_completion => sub {
