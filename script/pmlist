@@ -122,6 +122,9 @@ sub pmlist {
 
     my $query = $args{query} // "";
 
+    # normalize namespace separator
+    $query =~ s![/.-]!::!g;
+
     local @INC = @INC;
     @INC = do {
         no warnings 'once';
