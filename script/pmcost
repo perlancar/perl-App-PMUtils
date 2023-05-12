@@ -16,7 +16,7 @@ use Perinci::CmdLine::Any;
 our %SPEC;
 $SPEC{pmcost} = {
     v => 1.1,
-    summary => 'Load Perl module with Devel::EndStats',
+    summary => 'Load Perl module with Devel::EndStats to show module loading overhead',
     description => <<'_',
 
 
@@ -34,6 +34,9 @@ _
             'summary.alt.bool.not' => 'Load module without import(): use MOD ()',
             schema => 'bool*',
             default => 1,
+        },
+        time_hires => {
+            schema => 'true*',
         },
         hide_core => {
             schema => 'bool',
@@ -60,6 +63,7 @@ sub pmcost {
     my $import = $args{import} // 1;
 
     my $de_import = "verbose,1";
+    $de_import .= ",time_hires,1" if $args{time_hires};
     $de_import .= ",hide_core,1" if $args{hide_core};
     $de_import .= ",hide_noncore,1" if $args{hide_noncore};
     $de_import .= ",show_memsize,1,sort,-memsize" if $args{show_memsize};
