@@ -17,11 +17,11 @@ our %SPEC;
 $SPEC{pmcost} = {
     v => 1.1,
     summary => 'Load Perl module with Devel::EndStats to show module loading overhead',
-    description => <<'_',
+    description => <<'MARKDOWN',
 
 
 
-_
+MARKDOWN
     args => {
         module => {
             schema => ['array*', of=>'perl::modname_with_optional_args*'],
@@ -37,6 +37,7 @@ _
         },
         time_hires => {
             schema => 'true*',
+            cmdline_aliases => {H=>{}},
         },
         hide_core => {
             schema => 'bool',
